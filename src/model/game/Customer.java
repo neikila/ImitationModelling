@@ -4,8 +4,12 @@ package model.game;
  * Created by neikila on 01.11.15.
  */
 public class Customer {
+    // появился в очереди
     private double setInQueue;
-    private double getOutOfQueue;
+    // покинул очередь и начался процесс обслуживания на кассе
+    private double gotOutOfQueue;
+    // покинул кассу
+    private double gotOutOfCashbox;
 
     public Customer(double setInQueue) {
         this.setInQueue = setInQueue;
@@ -15,11 +19,19 @@ public class Customer {
         return setInQueue;
     }
 
-    public void getOutOfQueue(double time) {
-        getOutOfQueue = time;
+    public void gotOutOfQueue(double time) {
+        gotOutOfQueue = time;
+    }
+
+    public void gotOutOfCashbox(double time) {
+        gotOutOfCashbox = time;
     }
 
     public double timeSpentInQueue() {
-        return getOutOfQueue - setInQueue;
+        return gotOutOfQueue - setInQueue;
+    }
+
+    public double timeBeingServed() {
+        return gotOutOfCashbox - gotOutOfQueue;
     }
 }

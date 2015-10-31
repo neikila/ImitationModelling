@@ -44,10 +44,12 @@ public class Cashbox {
         return !queue.isEmpty();
     }
 
-    public double accept() {
+    public double accept(double time) {
         isFree = false;
+        queue.get(0).gotOutOfQueue(time);
         double timeToServe = generator.getMiddleTime(requestHandlingTime, delta);
         System.out.println("\nAccepted.");
+        System.out.println("Time: " + time);
         System.out.println("Time to serve: " + timeToServe);
         System.out.println("Queue size: " + queue.size());
         return timeToServe;
@@ -56,5 +58,9 @@ public class Cashbox {
     public Customer release() {
         isFree = true;
         return queue.remove(0);
+    }
+
+    public int getQueueSize() {
+        return queue.size();
     }
 }
