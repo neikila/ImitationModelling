@@ -50,6 +50,8 @@ public class Model {
             analytics.saveSnapshot(new Snapshot(time, cashbox.getQueueSize()));
         }
         System.out.println("Finished");
+        analytics.countAverageServingTime(customers);
+        analytics.countAverageWaitingInQueueTime(customers);
     }
 
     private void dispatchEvent(Event event) {

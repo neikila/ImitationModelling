@@ -13,5 +13,9 @@ public class Main {
         Analytics analytics = new Analytics();
         Model model = new Model(settings, analytics);
         model.run();
+
+        System.out.println("Analytics");
+        System.out.println("Average time on cashbox: " + analytics.getAverageServingTime());
+        System.out.println("Average time in queue: " + analytics.getAverageWaitingInQueueTime());
     }
 }
