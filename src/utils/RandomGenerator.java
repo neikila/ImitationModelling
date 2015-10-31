@@ -15,4 +15,12 @@ public class RandomGenerator {
     public double getTime(double leftBound, double delta) {
         return random.nextDouble() % delta + leftBound;
     }
+
+    public double getTime(double delta) {
+        return random.nextDouble() % delta;
+    }
+
+    public double getMiddleTime(double middle, double delta) {
+        return random.nextDouble() % delta + middle - delta / 2;
+    }
 }

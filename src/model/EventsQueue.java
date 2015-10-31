@@ -1,6 +1,6 @@
 package model;
 
-import model.events.CustomerIncome;
+import model.events.customEvents.CustomerIncome;
 import model.events.Event;
 import model.events.EventComparator;
 import utils.RandomGenerator;
@@ -13,10 +13,9 @@ import java.util.List;
  */
 public class EventsQueue {
     private List<Event> queue;
-    private RandomGenerator generator;
 
     public EventsQueue(Settings settings) {
-        this.generator = new RandomGenerator();
+        RandomGenerator generator = new RandomGenerator();
         this.queue = new ArrayList<Event>(settings.getLimitSize());
 
         double temp = 0;

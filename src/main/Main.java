@@ -1,5 +1,6 @@
 package main;
 
+import model.Model;
 import model.Settings;
 
 /**
@@ -8,5 +9,7 @@ import model.Settings;
 public class Main {
     public static void main(String[] args) {
         Settings settings = new Settings();
+        Model model = new Model(settings);
+        model.run();
     }
 }

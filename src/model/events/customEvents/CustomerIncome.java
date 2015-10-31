@@ -1,4 +1,7 @@
-package model.events;
+package model.events.customEvents;
+
+import model.events.Event;
+import model.events.EventType;
 
 /**
  * Created by neikila on 31.10.15.

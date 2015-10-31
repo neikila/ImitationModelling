@@ -7,6 +7,7 @@ public class Settings {
     private int limitSize;
     private double requestTimeDelta;
     private double requestHandlingTime;
+    private double requestHandlingTimeError;
 
     public double getRequestTimeDelta() {
         return requestTimeDelta;
@@ -20,9 +21,12 @@ public class Settings {
         return limitSize;
     }
 
+    public double getRequestHandlingTimeError() { return requestHandlingTimeError; }
+
     public Settings() {
         this.limitSize = 20;
         this.requestTimeDelta = 3;
-        this.requestHandlingTime = 2;
+        this.requestHandlingTime = 4;
+        this.requestHandlingTimeError = 0.5;
     }
 }
