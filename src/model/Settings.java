@@ -29,6 +29,7 @@ public class Settings {
         requestTimeDelta = 3;
         requestHandlingTime = 4;
         requestHandlingTimeError = 0.5;
+        fileName = "./result.txt";
     }
 
     public boolean printToFile() {
@@ -37,5 +38,9 @@ public class Settings {
 
     public String getFileName() {
         return fileName;
+    }
+
+    public boolean isOutsideConditionEqual() {
+        return false;
     }
 }

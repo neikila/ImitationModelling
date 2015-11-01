@@ -3,6 +3,9 @@ package main;
 import analytics.Analytics;
 import model.Model;
 import model.Settings;
+import model.events.Event;
+import model.events.customEvents.CustomerIncome;
+import utils.RandomGenerator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,11 +24,23 @@ public class Main {
         Settings settings = new Settings();
         try {
             if (settings.printToFile()) {
-                out = new PrintStream(new File("./result.txt"));
+                out = new PrintStream(new File(settings.getFileName()));
                 System.out.println("Output to file");
             }
         } catch (FileNotFoundException e) {
             System.err.println(e);
+        }
+
+        List <Event> queue = null;
+        if (settings.isOutsideConditionEqual()) {
+            queue = new ArrayList<>(settings.getLimitSize());
+
+            RandomGenerator generator = new RandomGenerator();
+            double temp = 0;
+            for (int i = 0; i < settings.getLimitSize(); ++i) {
+                queue.add(new CustomerIncome(generator.getTime(temp, settings.getRequestTimeDelta())));
+                temp += settings.getRequestTimeDelta();
+            }
         }
 
         // Количество прогонов
@@ -37,13 +52,15 @@ public class Main {
             out.println("Simulation number " + i);
 
             Analytics analytics = new Analytics();
-            Model model = new Model(settings, analytics);
+            Model model = new Model(settings, analytics, queue);
             model.run();
             data.add(analytics);
             analytics.print();
         }
 
-        out.println("\nResults according to " + size + " simulations");
+        out.println();
+        out.println("#################################");
+        out.println("Results according to " + size + " simulations");
         out.println("Average time in queue: " + countAverageInQueueTime(data));
         out.println("Average time on cashbox: " + countAverageServingTime(data));
     }

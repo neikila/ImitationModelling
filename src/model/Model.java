@@ -24,17 +24,26 @@ public class Model {
     private Cashbox cashbox;
     private List <Customer> customers;
 
-    public Model(Settings settings, Analytics analytics) {
+    public Model(Settings settings, Analytics analytics, List<Event> queue) {
+        if (queue != null) {
+            this.queue = new EventsQueue(queue);
+        } else {
+            this.queue = new EventsQueue(settings);
+        }
         this.analytics = analytics;
         this.settings = settings;
         this.time = 0;
-        this.queue = new EventsQueue(settings);
 
         this.customers = new ArrayList<>(settings.getLimitSize());
         cashbox = new Cashbox(
                 settings.getRequestHandlingTime(),
                 settings.getRequestHandlingTimeError());
     }
+
+    public Model(Settings settings, Analytics analytics) {
+        this(settings, analytics, null);
+    }
+
 
     public void run() {
         Event currentEvent;

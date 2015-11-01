@@ -15,14 +15,18 @@ public class EventsQueue {
     private List<Event> queue;
 
     public EventsQueue(Settings settings) {
-        RandomGenerator generator = new RandomGenerator();
-        this.queue = new ArrayList<Event>(settings.getLimitSize());
+        this.queue = new ArrayList<>(settings.getLimitSize());
 
+        RandomGenerator generator = new RandomGenerator();
         double temp = 0;
         for (int i = 0; i < settings.getLimitSize(); ++i) {
             queue.add(new CustomerIncome(generator.getTime(temp, settings.getRequestTimeDelta())));
             temp += settings.getRequestTimeDelta();
         }
+    }
+
+    public EventsQueue(List <Event> queue) {
+        this.queue = new ArrayList<>(queue);
     }
 
     public void addEvent(Event event) {
