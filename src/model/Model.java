@@ -2,6 +2,7 @@ package model;
 
 import analytics.Analytics;
 import analytics.Snapshot;
+import main.Main;
 import model.events.Event;
 import model.events.customEvents.CustomerReleased;
 import model.game.Cashbox;
@@ -41,15 +42,15 @@ public class Model {
             currentEvent = queue.next();
             time = currentEvent.getDate();
 
-            System.out.println();
-            System.out.println("Time: " + time);
-            System.out.println("Event: " + currentEvent.getEventType());
+            Main.out.println();
+            Main.out.println("Time: " + time);
+            Main.out.println("Event: " + currentEvent.getEventType());
 
             dispatchEvent(currentEvent);
 
             analytics.saveSnapshot(new Snapshot(time, cashbox.getQueueSize()));
         }
-        System.out.println("Finished");
+        Main.out.println("Finished");
         analytics.countAverageServingTime(customers);
         analytics.countAverageWaitingInQueueTime(customers);
     }
@@ -73,8 +74,8 @@ public class Model {
                 // Освобождение кассы от клиента
                 customer = cashbox.release();
                 customer.gotOutOfCashbox(time);
-                System.out.println("Customer spent in queue: " + customer.timeSpentInQueue());
-                System.out.println("Customer was served in " + customer.timeBeingServed());
+                Main.out.println("Customer spent in queue: " + customer.timeSpentInQueue());
+                Main.out.println("Customer was served in " + customer.timeBeingServed());
 
                 // Если очередь не пуста, то принимаем его на кассе
                 if (cashbox.hasNext()) {

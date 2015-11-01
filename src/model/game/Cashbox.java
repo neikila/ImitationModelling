@@ -1,5 +1,6 @@
 package model.game;
 
+import main.Main;
 import utils.RandomGenerator;
 
 import java.util.ArrayList;
@@ -48,10 +49,10 @@ public class Cashbox {
         isFree = false;
         queue.get(0).gotOutOfQueue(time);
         double timeToServe = generator.getMiddleTime(requestHandlingTime, delta);
-        System.out.println("\nAccepted.");
-        System.out.println("Time: " + time);
-        System.out.println("Time to serve: " + timeToServe);
-        System.out.println("Queue size: " + queue.size());
+        Main.out.println("\nAccepted.");
+        Main.out.println("Time: " + time);
+        Main.out.println("Time to serve: " + timeToServe);
+        Main.out.println("Queue size: " + queue.size());
         return timeToServe;
     }
 

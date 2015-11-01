@@ -8,6 +8,7 @@ public class Settings {
     private double requestTimeDelta;
     private double requestHandlingTime;
     private double requestHandlingTimeError;
+    private String fileName;
 
     public double getRequestTimeDelta() {
         return requestTimeDelta;
@@ -24,9 +25,17 @@ public class Settings {
     public double getRequestHandlingTimeError() { return requestHandlingTimeError; }
 
     public Settings() {
-        this.limitSize = 20;
-        this.requestTimeDelta = 3;
-        this.requestHandlingTime = 4;
-        this.requestHandlingTimeError = 0.5;
+        limitSize = 20;
+        requestTimeDelta = 3;
+        requestHandlingTime = 4;
+        requestHandlingTimeError = 0.5;
+    }
+
+    public boolean printToFile() {
+        return true;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }

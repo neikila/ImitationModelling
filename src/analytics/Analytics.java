@@ -1,5 +1,6 @@
 package analytics;
 
+import main.Main;
 import model.game.Customer;
 
 import java.util.ArrayList;
@@ -47,5 +48,11 @@ public class Analytics {
 
     public double getAverageServingTime() {
         return averageServingTime;
+    }
+
+    public void print() {
+        Main.out.println("Analytics");
+        Main.out.println("Average time on cashbox: " + averageServingTime);
+        Main.out.println("Average time in queue: " + averageWaitingInQueueTime);
     }
 }
