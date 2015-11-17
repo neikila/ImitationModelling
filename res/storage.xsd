@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">  
+  <xsd:element name="storage">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bounds" minOccurs="1" maxOccurs="1"/>
+        <xsd:element ref="barriers" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="bounds" type="polygon" />
+  <xsd:element name="barriers">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="barrier" type="polygon" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="point">
+    <xsd:complexType>
+      <xsd:attribute name="x" type="xsd:double"/>
+      <xsd:attribute name="y" type="xsd:double"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="polygon">
+    <xsd:sequence>
+      <xsd:element ref="point" minOccurs="3" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

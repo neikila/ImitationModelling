@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="storage.xsl"?>
+<storage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="storage.xsd">
+  <bounds>
+    <point x="0" y="0"/>
+    <point x="120" y="0"/>
+    <point x="120" y="120"/>
+    <point x="0" y="120"/>
+  </bounds>
+  <barriers>
+    <barrier>
+      <point x="35" y="35"/>
+      <point x="45" y="35"/>
+      <point x="45" y="45"/>
+      <point x="35" y="45"/>
+    </barrier>
+    <barrier>
+      <point x="75" y="75"/>
+      <point x="85" y="75"/>
+      <point x="85" y="85"/>
+      <point x="75" y="85"/>
+    </barrier>
+    <barrier>
+      <point x="75" y="75"/>
+      <point x="85" y="75"/>
+      <point x="85" y="85"/>
+      <point x="75" y="85"/>
+    </barrier>
+    <barrier>
+      <point x="35" y="35"/>
+      <point x="45" y="35"/>
+      <point x="45" y="45"/>
+      <point x="35" y="45"/>
+    </barrier>
+  </barriers>
+</storage>

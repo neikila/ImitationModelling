@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">  
+  <xsd:include schemaLocation="fullName.xsd"/>
+  <xsd:include schemaLocation="telephone.xsd"/>
+  <xsd:element name="people">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="person" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="person">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="fullName" />
+        <xsd:element name="contacts">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="telephones">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element ref="telephone" minOccurs="0" maxOccurs="unbounded" />
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
