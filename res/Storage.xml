@@ -9,28 +9,37 @@
   </bounds>
   <barriers>
     <barrier>
-      <point x="35" y="35"/>
-      <point x="45" y="35"/>
-      <point x="45" y="45"/>
-      <point x="35" y="45"/>
+      <form>
+        <point x="35" y="35"/>
+        <point x="45" y="35"/>
+        <point x="45" y="45"/>
+        <point x="35" y="45"/>
+      </form>
     </barrier>
     <barrier>
-      <point x="75" y="75"/>
-      <point x="85" y="75"/>
-      <point x="85" y="85"/>
-      <point x="75" y="85"/>
+      <form>
+        <point x="75" y="35"/>
+        <point x="85" y="35"/>
+        <point x="85" y="45"/>
+        <point x="75" y="45"/>
+      </form>
     </barrier>
     <barrier>
-      <point x="75" y="75"/>
-      <point x="85" y="75"/>
-      <point x="85" y="85"/>
-      <point x="75" y="85"/>
+      <form>
+        <point x="75" y="75"/>
+        <point x="85" y="75"/>
+        <point x="85" y="85"/>
+        <point x="75" y="85"/>
+      </form>
     </barrier>
     <barrier>
-      <point x="35" y="35"/>
-      <point x="45" y="35"/>
-      <point x="45" y="45"/>
-      <point x="35" y="45"/>
+      <position x="40" y="80"/>
+      <form>
+        <point x="-5" y="-5"/>
+        <point x="5" y="-5"/>
+        <point x="5" y="5"/>
+        <point x="-5" y="5"/>
+      </form>
     </barrier>
   </barriers>
 </storage>
