@@ -42,4 +42,21 @@
       </form>
     </barrier>
   </barriers>
+  <racks>
+    <rack>
+      <position x="1" y="1"/>
+      <size x="20" y="20"/>
+      <levels>5</levels>
+      <maxWeightPerSection>10</maxWeightPerSection>
+      <sectionSize x="3" y="3"/>
+    </rack>
+  </racks>
+  <entrance>
+    <point x="30" y="0"/>
+    <point x="40" y="0"/>
+  </entrance>
+  <exit>
+    <point x="30" y="120"/>
+    <point x="40" y="10"/>
+  </exit>
 </storage>

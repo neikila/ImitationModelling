@@ -3,9 +3,11 @@
   <xsd:element name="storage">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element ref="bounds" minOccurs="1" maxOccurs="1"/>
-        <xsd:element ref="barriers" minOccurs="1" maxOccurs="1"/>
-        <xsd:element ref="racks" minOccurs="1" maxOccurs="1"/>
+        <xsd:element ref="bounds"/>
+        <xsd:element ref="barriers"/>
+        <xsd:element ref="racks"/>
+        <xsd:element name="entrance" type="gate"/>
+        <xsd:element name="exit" type="gate"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -23,8 +25,8 @@
   <xsd:element name="barrier">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="position" type="point" minOccurs="0" maxOccurs="1"/>
-        <xsd:element name="form" type="polygon" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="position" type="point" minOccurs="0"/>
+        <xsd:element name="form" type="polygon"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -33,7 +35,6 @@
     <xsd:attribute name="x" type="xsd:double"/>
     <xsd:attribute name="y" type="xsd:double"/>
   </xsd:complexType>
-
 
   <xsd:complexType name="polygon">
     <xsd:sequence>
@@ -44,14 +45,59 @@
   <xsd:element name="racks">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="rack" minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="rack" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="rack">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="position" type="point"/>
+        <xsd:element name="size" type="point"/>
+        <xsd:element name="levels" type="xsd:integer"/>
+        <xsd:element name="maxWeightPerSection" type="xsd:double"/>
+        <xsd:element name="sectionSize" type="point"/>
+        <xsd:element name="sections" minOccurs="0">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="position" type="point"/>
+              <xsd:element ref="section" minOccurs="1" maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
+
+  <xsd:element name="section">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="number" minOccurs="0"/>
+        <xsd:element name="products" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="product" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="product">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="typeName" type="xsd:string" minOccurs="0"/>
+        <xsd:element name="typeId" type="xsd:integer" minOccurs="0"/>
+        <xsd:element name="amount" type="xsd:integer"/>
+        <xsd:element name="weightOfSingleProduct" type="xsd:double"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="gate">
+    <xsd:sequence>
+      <xsd:element name="point" minOccurs="2" maxOccurs="unbounded" type="point"/>
+    </xsd:sequence>
+  </xsd:complexType>
 </xsd:schema>
