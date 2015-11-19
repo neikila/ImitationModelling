@@ -9,6 +9,7 @@ public class Settings {
     private double requestHandlingTime;
     private double requestHandlingTimeError;
     private String fileName;
+    private String xmlResourceFilename;
 
     public double getRequestTimeDelta() {
         return requestTimeDelta;
@@ -30,6 +31,11 @@ public class Settings {
         requestHandlingTime = 4;
         requestHandlingTimeError = 0.5;
         fileName = "./result.txt";
+        xmlResourceFilename = "Storage.xml";
+    }
+
+    public String getXmlResourceFilename() {
+        return xmlResourceFilename;
     }
 
     public boolean printToFile() {
