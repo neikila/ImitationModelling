@@ -58,45 +58,6 @@
         <xsd:element name="levels" type="xsd:integer"/>
         <xsd:element name="maxWeightPerSection" type="xsd:double"/>
         <xsd:element name="sectionSize" type="point"/>
-        <xsd:element name="sections" minOccurs="0">
-          <xsd:complexType>
-            <xsd:sequence>
-              <xsd:element ref="section" minOccurs="1" maxOccurs="unbounded"/>
-            </xsd:sequence>
-          </xsd:complexType>
-        </xsd:element>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="section">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="number" minOccurs="0"/>
-        <xsd:element name="products" minOccurs="0">
-          <xsd:complexType>
-            <xsd:sequence>
-              <xsd:element ref="product" minOccurs="1" maxOccurs="unbounded"/>
-            </xsd:sequence>
-          </xsd:complexType>
-        </xsd:element>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-  
-  <xsd:element name="product">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="typeName" type="xsd:string" minOccurs="0"/>
-        <xsd:element name="typeId" minOccurs="0">
-          <xsd:simpleType>
-            <xsd:restriction base="xsd:integer">
-              <xsd:minInclusive value="0"/>
-            </xsd:restriction>
-          </xsd:simpleType>
-        </xsd:element>
-        <xsd:element name="amount" type="xsd:integer"/>
-        <xsd:element name="weightOfSingleProduct" type="xsd:double"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

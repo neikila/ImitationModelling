@@ -3,60 +3,95 @@
 <storage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="storage.xsd">
   <bounds>
     <point x="0" y="0"/>
-    <point x="120" y="0"/>
-    <point x="120" y="120"/>
-    <point x="0" y="120"/>
+    <point x="14000" y="0"/>
+    <point x="14000" y="14000"/>
+    <point x="0" y="14000"/>
   </bounds>
   <barriers>
     <barrier>
       <form>
-        <point x="35" y="35"/>
-        <point x="45" y="35"/>
-        <point x="45" y="45"/>
-        <point x="35" y="45"/>
+        <point x="2000" y="4000"/>
+        <point x="4000" y="4000"/>
+        <point x="4000" y="6000"/>
+        <point x="2000" y="6000"/>
       </form>
     </barrier>
     <barrier>
       <form>
-        <point x="75" y="35"/>
-        <point x="85" y="35"/>
-        <point x="85" y="45"/>
-        <point x="75" y="45"/>
+        <point x="10000" y="4000"/>
+        <point x="12000" y="4000"/>
+        <point x="12000" y="6000"/>
+        <point x="10000" y="6000"/>
       </form>
     </barrier>
     <barrier>
       <form>
-        <point x="75" y="75"/>
-        <point x="85" y="75"/>
-        <point x="85" y="85"/>
-        <point x="75" y="85"/>
+        <point x="2000" y="10000"/>
+        <point x="4000" y="10000"/>
+        <point x="4000" y="12000"/>
+        <point x="2000" y="12000"/>
       </form>
     </barrier>
     <barrier>
-      <position x="40" y="80"/>
+      <position x="10000" y="10000"/>
       <form>
-        <point x="-5" y="-5"/>
-        <point x="5" y="-5"/>
-        <point x="5" y="5"/>
-        <point x="-5" y="5"/>
+        <point x="0" y="0"/>
+        <point x="2000" y="0"/>
+        <point x="2000" y="2000"/>
+        <point x="0" y="2000"/>
       </form>
     </barrier>
   </barriers>
   <racks>
     <rack>
-      <position x="1" y="1"/>
-      <size x="20" y="20"/>
+      <position x="2000" y="2000"/>
+      <size x="2000" y="2000"/>
       <levels>5</levels>
       <maxWeightPerSection>10</maxWeightPerSection>
-      <sectionSize x="3" y="3"/>
+      <sectionSize x="2000" y="2000"/>
+    </rack>
+    <rack>
+      <position x="4000" y="2000"/>
+      <size x="6000" y="4000"/>
+      <levels>5</levels>
+      <maxWeightPerSection>10</maxWeightPerSection>
+      <sectionSize x="2000" y="2000"/>
+    </rack>
+    <rack>
+      <position x="10000" y="2000"/>
+      <size x="2000" y="2000"/>
+      <levels>5</levels>
+      <maxWeightPerSection>10</maxWeightPerSection>
+      <sectionSize x="2000" y="2000"/>
+    </rack>
+    <rack>
+      <position x="2000" y="8000"/>
+      <size x="2000" y="2000"/>
+      <levels>5</levels>
+      <maxWeightPerSection>10</maxWeightPerSection>
+      <sectionSize x="2000" y="2000"/>
+    </rack>
+    <rack>
+      <position x="4000" y="8000"/>
+      <size x="6000" y="4000"/>
+      <levels>5</levels>
+      <maxWeightPerSection>10</maxWeightPerSection>
+      <sectionSize x="2000" y="2000"/>
+    </rack>
+    <rack>
+      <position x="10000" y="8000"/>
+      <size x="2000" y="2000"/>
+      <levels>5</levels>
+      <maxWeightPerSection>10</maxWeightPerSection>
+      <sectionSize x="2000" y="2000"/>
     </rack>
   </racks>
   <entrance>
-    <point x="30" y="0"/>
-    <point x="40" y="0"/>
+    <point x="4000" y="14000"/>
+    <point x="10000" y="14000"/>
   </entrance>
   <exit>
-    <point x="30" y="120"/>
-    <point x="40" y="10"/>
+    <point x="4000" y="0"/>
+    <point x="10000" y="0"/>
   </exit>
 </storage>

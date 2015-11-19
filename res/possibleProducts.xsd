@@ -8,6 +8,7 @@
             <xsd:sequence>
               <xsd:element name="productName" type="xsd:string"/>
               <xsd:element name="productId" type="xsd:decimal" minOccurs="0"/>
+              <xsd:element name="weightOfSingleProduct" type="xsd:double"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
