@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import storageModel.Barrier;
+import storageModel.Rack;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,33 +24,30 @@ import java.util.function.Function;
  */
 public class XMLParser {
     private Element root;
-    private List<Point> wallPoints;
-    private List<Barrier> barriers;
 
     public static final String BOUNDS = "bounds";
     public static final String BARRIERS = "barriers";
+    public static final String RACKS = "racks";
 
     public XMLParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
-        wallPoints = new ArrayList<>();
-
         File fXmlFile = new File("res/" + fileName);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(fXmlFile);
         root = doc.getDocumentElement();
         root.normalize();
-
-        wallPoints = getArrayOfSomethingFromElement(root, BOUNDS, this::getPoint);
-        barriers = getArrayOfSomethingFromElement(root, BARRIERS, this::getBarrier);
-        System.out.println("Root element :" + root.getNodeName());
     }
 
     public List<Barrier> getBarriers() {
-        return barriers;
+        return getArrayOfSomethingFromElement(root, BARRIERS, this::getBarrier);
     }
 
     public List<Point> getWallPoints() {
-        return wallPoints;
+        return getArrayOfSomethingFromElement(root, BOUNDS, this::getPoint);
+    }
+
+    public List<Rack> getRacks() {
+        return getArrayOfSomethingFromElement(root, RACKS, this::getRack);
     }
 
     private <T> List<T> getArrayOfSomethingFromElement (Element node, String tag, Function<Element, T> getter) {
@@ -115,5 +113,15 @@ public class XMLParser {
             result[i] = iterator.next();
         }
         return result;
+    }
+
+    private Rack getRack(Element el) {
+        Point position = getPoint((Element)el.getElementsByTagName("position").item(0));
+        Point size = getPoint((Element)el.getElementsByTagName("size").item(0));
+        int levels = Integer.parseInt(el.getElementsByTagName("levels").item(0).getTextContent());
+        double maxWeightPerSection = Double.parseDouble(el.getElementsByTagName("maxWeightPerSection").item(0).getTextContent());
+        Point sectionSize = getPoint((Element)el.getElementsByTagName("sectionSize").item(0));
+
+        return new Rack(position, size, levels, maxWeightPerSection, sectionSize);
     }
 }

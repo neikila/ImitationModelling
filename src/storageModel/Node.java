@@ -2,21 +2,26 @@ package storageModel;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by neikila on 19.11.15.
  */
 public class Node {
-    public List<Node> neighbors;
-    public Point index;
-    public List<Integer> willBeBlockedAfter;
+    private List<Node> neighbors;
+    private Point index;
 
     public Node(Point index) {
-        this.index = index;
         neighbors = new ArrayList<>();
-        willBeBlockedAfter = new LinkedList<>();
+        this.index = index;
+    }
+
+    public Point getIndex() {
+        return index;
+    }
+
+    public List<Node> getNeighbors() {
+        return neighbors;
     }
 
     public boolean addNeighbor(Node node) {
@@ -30,6 +35,4 @@ public class Node {
     public boolean isNeighborTo(Node node) {
         return neighbors.contains(node);
     }
-
-
 }

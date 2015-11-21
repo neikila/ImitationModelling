@@ -1,12 +1,17 @@
 package main;
 
 import analytics.Analytics;
+import model.Model;
 import model.Settings;
+import model.events.Event;
+import model.events.customEvents.CustomerIncome;
 import storageModel.Storage;
+import utils.RandomGenerator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,38 +37,42 @@ public class Main {
         storage.printAllWalls();
         storage.printAllBarriers();
 
-//        List <Event> queue = null;
-//        if (settings.isOutsideConditionEqual()) {
-//            queue = new ArrayList<>(settings.getLimitSize());
-//
-//            RandomGenerator generator = new RandomGenerator();
-//            double temp = 0;
-//            for (int i = 0; i < settings.getLimitSize(); ++i) {
-//                queue.add(new CustomerIncome(generator.getTime(temp, settings.getRequestTimeDelta())));
-//                temp += settings.getRequestTimeDelta();
-//            }
-//        }
-//
-//        // Количество прогонов
-//        int size = 10;
-//        List<Analytics> data = new ArrayList<>(size);
-//        for (int i = 0; i < size; ++i) {
-//            out.println();
-//            out.println("#################################");
-//            out.println("Simulation number " + i);
-//
-//            Analytics analytics = new Analytics();
-//            Model model = new Model(settings, analytics, queue);
-//            model.run();
-//            data.add(analytics);
-//            analytics.print();
-//        }
-//
-//        out.println();
-//        out.println("#################################");
-//        out.println("Results according to " + size + " simulations");
-//        out.println("Average time in queue: " + countAverageInQueueTime(data));
-//        out.println("Average time on cashbox: " + countAverageServingTime(data));
+    }
+
+    public static void previousMain(Settings settings) {
+        List <Event> queue = null;
+        if (settings.isOutsideConditionEqual()) {
+            queue = new ArrayList<>(settings.getLimitSize());
+
+            RandomGenerator generator = new RandomGenerator();
+            double temp = 0;
+            for (int i = 0; i < settings.getLimitSize(); ++i) {
+                queue.add(new CustomerIncome(generator.getTime(temp, settings.getRequestTimeDelta())));
+                temp += settings.getRequestTimeDelta();
+            }
+        }
+
+        // Количество прогонов
+        int size = 10;
+        List<Analytics> data = new ArrayList<>(size);
+        for (int i = 0; i < size; ++i) {
+            out.println();
+            out.println("#################################");
+            out.println("Simulation number " + i);
+
+            Analytics analytics = new Analytics();
+            Model model = new Model(settings, analytics, queue);
+            model.run();
+            data.add(analytics);
+            analytics.print();
+        }
+
+        out.println();
+        out.println("#################################");
+        out.println("Results according to " + size + " simulations");
+        out.println("Average time in queue: " + countAverageInQueueTime(data));
+        out.println("Average time on cashbox: " + countAverageServingTime(data));
+
     }
 
     public static double countAverageServingTime(List <Analytics> data) {

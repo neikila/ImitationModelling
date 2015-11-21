@@ -61,7 +61,7 @@
       <position x="10000" y="2000"/>
       <size x="2000" y="2000"/>
       <levels>5</levels>
-      <maxWeightPerSection>10</maxWeightPerSection>
+      <maxWeightPerSection>13</maxWeightPerSection>
       <sectionSize x="2000" y="2000"/>
     </rack>
     <rack>

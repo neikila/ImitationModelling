@@ -28,7 +28,7 @@ public class Rack {
         return size;
     }
 
-    public int getLevels() {
+    public int getLevel() {
         return levels;
     }
 
