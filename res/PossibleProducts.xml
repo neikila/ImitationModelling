@@ -4,12 +4,15 @@
   <product>
     <productName>stackOfWood</productName>
     <productId>1</productId>
+    <weightOfSingleProduct>1</weightOfSingleProduct>
   </product>
   <product>
     <productName>metal</productName>
     <productId>2</productId>
+    <weightOfSingleProduct>1</weightOfSingleProduct>
   </product>
   <product>
     <productName>corn</productName>
+    <weightOfSingleProduct>1</weightOfSingleProduct>
   </product>
 </possibleProducts>

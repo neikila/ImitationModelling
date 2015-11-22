@@ -15,6 +15,7 @@ public class Storage {
     private List<Section> sections;
     private List<Rack> racks;
     private Point box;
+    private GraphOfWays graph;
 
     public Storage(XMLParser parser) {
         box = new Point(2000, 2000);
@@ -23,9 +24,8 @@ public class Storage {
         this.racks = parser.getRacks();
         this.sections = new ArrayList<>();
         setSections();
-        printAllSections();
 
-        new GraphOfWays(this);
+        graph = new GraphOfWays(this);
     }
 
     public void setSections() {
