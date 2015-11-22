@@ -40,11 +40,22 @@ public class Storage {
                     for (int k = 0; k < rack.getLevel(); ++k) {
                         Point temp = new Point(coord);
                         temp.translate(box.x * i, box.y * j);
+                        int[] x = new int[4];
+                        int[] y = new int[4];
+                        x[0] = temp.x;
+                        y[0] = temp.y;
+                        x[1] = temp.x + box.x;
+                        y[1] = temp.y;
+                        x[2] = temp.x + box.x;
+                        y[2] = temp.y + box.y;
+                        x[3] = temp.x;
+                        y[3] = temp.y + box.y;
                         sections.add(
                                 new Section(
                                         new Point(temp.x / box.x, temp.y / box.y),
                                         sectionSize,
-                                        k
+                                        k,
+                                        new Polygon(x, y, 4)
                                 )
                         );
                     }
@@ -54,6 +65,14 @@ public class Storage {
     }
 
     public boolean isEmpty(Point point) {
+        for (Barrier el: barriers) {
+            if (el.getPolygon().contains(point))
+                return false;
+        }
+        for (Section el: sections) {
+            if(el.getPolygon().contains(point))
+                return false;
+        }
         return true;
     }
 

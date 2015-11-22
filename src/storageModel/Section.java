@@ -12,21 +12,27 @@ public class Section {
     private int level;
     private int id;
     private Direction possibleDirection;
+    private Polygon polygon;
 
-    public Section(Point index, Point size, int level, Direction direction, int id) {
+    public Section(Point index, Point size, int level, Direction direction, int id, Polygon polygon) {
         this.id = id;
         this.index = index;
         this.size = size;
         this.level = level;
         this.possibleDirection = direction;
+        this.polygon = polygon;
     }
 
-    public Section(Point index, Point size, int level, Direction direction) {
-        this(index, size, level, direction, lastId++);
+    public Section(Point index, Point size, int level, Direction direction, Polygon polygon) {
+        this(index, size, level, direction, lastId++, polygon);
     }
 
-    public Section(Point index, Point size, int level) {
-        this(index, size, level, null);
+    public Section(Point index, Point size, int level, Polygon polygon) {
+        this(index, size, level, null, polygon);
+    }
+
+    public Polygon getPolygon() {
+        return polygon;
     }
 
     public Point getIndex() {

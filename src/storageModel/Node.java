@@ -10,10 +10,31 @@ import java.util.List;
 public class Node {
     private List<Node> neighbors;
     private Point index;
+    private double time;
+    private Node previous;
 
     public Node(Point index) {
+        previous = null;
+        time = 0;
         neighbors = new ArrayList<>();
         this.index = index;
+    }
+
+    public boolean setIfLess(double newTime, Node newPrevious) {
+        if (newTime < time) {
+            time = newTime;
+            previous = newPrevious;
+            return true;
+        }
+        return false;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public Node getPrevious() {
+        return previous;
     }
 
     public Point getIndex() {
@@ -32,7 +53,17 @@ public class Node {
         return toAdd;
     }
 
+    public void replaceNeighbor(Node toDelete, Node toAdd) {
+        neighbors.remove(toDelete);
+        neighbors.add(toAdd);
+    }
+
     public boolean isNeighborTo(Node node) {
         return neighbors.contains(node);
+    }
+
+    @Override
+    public String toString() {
+        return "Node: [" + index.x + ';' + index.y + "] Neighbors: " + neighbors.size();
     }
 }
