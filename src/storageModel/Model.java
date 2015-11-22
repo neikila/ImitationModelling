@@ -1,8 +1,8 @@
 package storageModel;
 
+import resourse.XMLProductsParser;
 import resourse.XMLStorageParser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,12 +12,9 @@ public class Model {
     private Storage storage;
     private List<Product> possibleProducts;
 
-    public Model(XMLStorageParser parser) {
+    public Model(XMLStorageParser parser, XMLProductsParser productsParser) {
         this.storage = new Storage(parser);
-        possibleProducts = new ArrayList<>();
-        possibleProducts.add(new Product("Steel"));
-        possibleProducts.add(new Product("Wood"));
-        possibleProducts.add(new Product("Cotton"));
-        possibleProducts.add(new Product("Food"));
+        possibleProducts = productsParser.getProducts();
+        System.out.println("Test");
     }
 }

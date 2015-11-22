@@ -34,6 +34,10 @@ public class XMLParser {
 
     protected <T> List<T> getArrayOfSomethingFromElement (Element node, String tag, Function<Element, T> getter) {
         Node bounds = node.getElementsByTagName(tag).item(0);
+        return getArrayOfSomethingFromElement((Element)bounds, getter);
+    }
+
+    protected <T> List<T> getArrayOfSomethingFromElement (Element bounds, Function<Element, T> getter) {
         bounds.normalize();
         NodeList nList = bounds.getChildNodes();
         List <T> result = new ArrayList<>();

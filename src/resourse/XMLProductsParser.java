@@ -20,11 +20,14 @@ public class XMLProductsParser extends XMLParser {
     }
 
     public List<Product> getProducts() {
-        return getArrayOfSomethingFromElement(root, PRODUCT, this::getProduct);
+        return getArrayOfSomethingFromElement(root, this::getProduct);
     }
 
     private Product getProduct(Element node) {
-        String productName = node.getElementsByTagName("productName").item(0).getTextContent();
+        String productName = node.
+                getElementsByTagName("productName").
+                item(0).
+                getTextContent();
         double weight = Double.parseDouble(node.getElementsByTagName("weightOfSingleProduct").item(0).getTextContent());
         return new Product(productName, weight);
     }

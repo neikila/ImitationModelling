@@ -5,8 +5,8 @@ import model.Model;
 import model.Settings;
 import model.events.Event;
 import model.events.customEvents.CustomerIncome;
+import resourse.XMLProductsParser;
 import resourse.XMLStorageParser;
-import storageModel.Storage;
 import utils.RandomGenerator;
 
 import java.io.File;
@@ -34,7 +34,8 @@ public class Main {
         }
 
         XMLStorageParser parser = new XMLStorageParser(settings.getXmlResourceFilename());
-        Storage storage = new Storage(parser);
+        XMLProductsParser productsParser = new XMLProductsParser("PossibleProducts.xml");
+        new storageModel.Model(parser, productsParser);
 //        storage.printAllWalls();
 //        storage.printAllBarriers();
     }
