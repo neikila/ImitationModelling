@@ -1,4 +1,4 @@
-package main;
+package resourse;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import storageModel.Barrier;
+import storageModel.Direction;
 import storageModel.Rack;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -121,7 +122,12 @@ public class XMLParser {
         int levels = Integer.parseInt(el.getElementsByTagName("levels").item(0).getTextContent());
         double maxWeightPerSection = Double.parseDouble(el.getElementsByTagName("maxWeightPerSection").item(0).getTextContent());
         Point sectionSize = getPoint((Element)el.getElementsByTagName("sectionSize").item(0));
+        NodeList direction = el.getElementsByTagName("direction");
+        Direction possibleDirection = null;
+        if (direction.getLength() > 0) {
+            possibleDirection = Direction.valueOf(direction.item(0).getTextContent());
+        }
 
-        return new Rack(position, size, levels, maxWeightPerSection, sectionSize);
+        return new Rack(position, size, levels, maxWeightPerSection, sectionSize, possibleDirection);
     }
 }

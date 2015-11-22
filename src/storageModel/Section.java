@@ -31,6 +31,18 @@ public class Section {
         this(index, size, level, null, polygon);
     }
 
+    public Point getCenter() {
+        int sumx = 0;
+        int sumy = 0;
+        for (int i = 0; i < polygon.npoints; ++i) {
+            sumx += polygon.xpoints[i];
+            sumy += polygon.ypoints[i];
+        }
+        sumx /= polygon.npoints;
+        sumy /= polygon.npoints;
+        return new Point(sumx, sumy);
+    }
+
     public Polygon getPolygon() {
         return polygon;
     }
@@ -57,5 +69,10 @@ public class Section {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "id: " + getId() + "; index[" + getIndex().x + ";" + getIndex().y + ']';
     }
 }

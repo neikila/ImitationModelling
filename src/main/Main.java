@@ -5,6 +5,7 @@ import model.Model;
 import model.Settings;
 import model.events.Event;
 import model.events.customEvents.CustomerIncome;
+import resourse.XMLParser;
 import storageModel.Storage;
 import utils.RandomGenerator;
 

@@ -49,6 +49,7 @@
       <levels>5</levels>
       <maxWeightPerSection>10</maxWeightPerSection>
       <sectionSize x="2000" y="2000"/>
+      <direction>Left</direction>
     </rack>
     <rack>
       <position x="4000" y="2000"/>

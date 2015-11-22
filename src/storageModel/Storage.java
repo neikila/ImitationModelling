@@ -1,6 +1,6 @@
 package storageModel;
 
-import main.XMLParser;
+import resourse.XMLParser;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -55,6 +55,7 @@ public class Storage {
                                         new Point(temp.x / box.x, temp.y / box.y),
                                         sectionSize,
                                         k,
+                                        rack.getDirection(),
                                         new Polygon(x, y, 4)
                                 )
                         );
@@ -62,6 +63,42 @@ public class Storage {
                 }
             }
         }
+
+        for (Section section: sections) {
+            if (section.getPossibleDirection() != null)
+                continue;
+            Point current;
+            current = new Point(section.getCenter());
+            current.translate(0, box.y);
+            if (isEmpty(current)) {
+                section.setPossibleDirection(Direction.Up);
+                continue;
+            }
+            current = new Point(section.getCenter());
+            current.translate(0, -box.y);
+            if (isEmpty(current)) {
+                section.setPossibleDirection(Direction.Down);
+                continue;
+            }
+            current = new Point(section.getCenter());
+            current.translate(box.x, 0);
+            if (isEmpty(current)) {
+                section.setPossibleDirection(Direction.Right);
+                continue;
+            }
+            current = new Point(section.getCenter());
+            current.translate(-box.x, 0);
+            if (isEmpty(current)) {
+                section.setPossibleDirection(Direction.Left);
+                continue;
+            }
+        }
+
+//        for (Section el: sections) {
+//            if (el.getLevel() == 1) {
+//                System.out.println(el.toString() + " Direction: " + el.getPossibleDirection());
+//            }
+//        }
     }
 
     public boolean isEmpty(Point point) {

@@ -1,6 +1,6 @@
 package storageModel;
 
-import main.XMLParser;
+import resourse.XMLParser;
 
 import java.util.ArrayList;
 import java.util.List;

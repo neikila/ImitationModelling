@@ -11,13 +11,20 @@ public class Rack {
     private int levels;
     private double maxWeightPerSection;
     private Point sectionSize;
+    private Direction direction;
 
     public Rack(Point coordinate, Point size, int levels, double maxWeightPerSection, Point sectionSize) {
+        this(coordinate, size,levels, maxWeightPerSection, sectionSize, null);
+    }
+
+    public Rack(Point coordinate, Point size, int levels,
+                double maxWeightPerSection, Point sectionSize, Direction direction) {
         this.coordinate = coordinate;
         this.size = size;
         this.levels = levels;
         this.maxWeightPerSection = maxWeightPerSection;
         this.sectionSize = sectionSize;
+        this.direction = direction;
     }
 
     public Point getCoordinate() {
@@ -38,5 +45,9 @@ public class Rack {
 
     public Point getSectionSize() {
         return sectionSize;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 }
