@@ -1,6 +1,6 @@
 package storageModel;
 
-import resourse.XMLParser;
+import resourse.XMLStorageParser;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Storage {
     private Point box;
     private GraphOfWays graph;
 
-    public Storage(XMLParser parser) {
+    public Storage(XMLStorageParser parser) {
         box = new Point(2000, 2000);
         this.boundPoints = parser.getWallPoints();
         this.barriers = parser.getBarriers();

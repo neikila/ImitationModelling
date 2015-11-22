@@ -5,7 +5,7 @@ import model.Model;
 import model.Settings;
 import model.events.Event;
 import model.events.customEvents.CustomerIncome;
-import resourse.XMLParser;
+import resourse.XMLStorageParser;
 import storageModel.Storage;
 import utils.RandomGenerator;
 
@@ -33,7 +33,7 @@ public class Main {
             System.err.println(e);
         }
 
-        XMLParser parser = new XMLParser(settings.getXmlResourceFilename());
+        XMLStorageParser parser = new XMLStorageParser(settings.getXmlResourceFilename());
         Storage storage = new Storage(parser);
 //        storage.printAllWalls();
 //        storage.printAllBarriers();
