@@ -1,15 +1,15 @@
 package storageModel;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by neikila on 21.11.15.
  */
 public class GraphOfWays {
+    public final double DELAY_AT_THE_CORNER = 3.0;
+    public final double DELAY_PER_METER = 1.0;
     public Map<Point, Node> nodes;
     public Point offset;
     public Point step;
@@ -65,21 +65,110 @@ public class GraphOfWays {
 
         ways = new ArrayList<>();
         updateWays();
-
         test.testWaysAmount(7);
+
+        System.out.println("Time: " + getTimeBetween(new Point(0,0), new Point(2,0)));
+
+        test.testNodesAmount(4, 2, 0);
+        test.testWaysAmount(7);
+
+//        getTimeBetween(new Point(0,0), new Point(6,1));
+//
+//        test.testNodesAmount(4, 2, 0);
+//        test.testWaysAmount(7);
     }
 
-    private void addNode(Node node) {
-        if (!nodes.containsValue(node)) {
-            for (int i = 0; i < ways.size(); ++i) {
-                Way way = ways.get(i);
-                if (way.interfereWith(node.getIndex())) {
-                    ways.remove(i);
-                    ways.add(new Way(way.one, node));
-                    ways.add(new Way(node, way.two));
+    private double count(Node from, Node to) {
+        double result = 0.0;
+        if (from.getPrevious() != null && !isOnTheLine(from.getPrevious(), from, to)) {
+            result += DELAY_AT_THE_CORNER;
+        }
+        result += from.distance(to) * step.x / 1000.0 * DELAY_PER_METER;
+        return result;
+    }
+
+    public double getTimeBetween(Point fromPoint, Point toPoint) {
+        Node from = nodes.get(fromPoint);
+        Node to = nodes.get(toPoint);
+        boolean fromFlag = false;
+        if (from == null) {
+            fromFlag = true;
+            from = addNode(fromPoint);
+        }
+        boolean toFlag = false;
+        if (to == null) {
+            toFlag = true;
+            to = addNode(toPoint);
+        }
+        if (from == null || to == null)
+            return -1.0;
+
+//        Tests test = new Tests();
+//        test.testNodesAmount(5, 2, 0);
+//        test.testWaysAmount(8);
+
+        PriorityQueue<Node> front = new PriorityQueue<>(new Node.NodeComparator());
+        from.setTime(0.0);
+        front.add(from);
+        while (!front.isEmpty()) {
+            Node min = front.poll();
+            if (min != to && to.isMoreThan(min.getTime())) {
+                for (Node neighbor : min.getNeighbors()) {
+                    double delta = count(min, neighbor);
+                    double newTime = min.getTime() + delta;
+                    if (neighbor.isMoreThan(newTime)) {
+                        if (front.contains(neighbor))
+                            front.remove(neighbor);
+                        neighbor.setTime(newTime);
+                        neighbor.setPrevious(min);
+                        front.add(neighbor);
+                    }
                 }
             }
         }
+        Node current = to;
+        System.out.println("The way");
+        while (current != from) {
+            System.out.println(current);
+            current = current.getPrevious();
+        }
+        System.out.println(current);
+
+        if (fromFlag)
+            removeNode(from);
+        if (toFlag)
+            removeNode(to);
+
+        nodes.values().forEach(Node::setToDefault);
+        return to.getTime();
+    }
+
+    private Node addNode(Point point) {
+        Node node = new Node(point);
+        int currentIndex = -1;
+        if (nodes.get(node.getIndex()) == null) {
+            nodes.put(node.getIndex(), node);
+            for (int i = 0; i < ways.size(); ++i) {
+                Way way = ways.get(i);
+                if (way.interfereWith(node.getIndex())) {
+                    currentIndex = i;
+                    break;
+                }
+            }
+            if (currentIndex != -1) {
+                Way way = ways.get(currentIndex);
+                ways.remove(currentIndex);
+                ways.add(new Way(way.one, node));
+                ways.add(new Way(node, way.two));
+                way.one.replaceNeighbor(way.two, node);
+                way.two.replaceNeighbor(way.one, node);
+                node.addNeighbor(way.one);
+                node.addNeighbor(way.two);
+            } else {
+                node = null;
+            }
+        }
+        return node;
     }
 
     private void removeNode(Node node) {
@@ -93,6 +182,7 @@ public class GraphOfWays {
                 else
                     second = temp.two;
                 ways.remove(i);
+                --i;
             }
             if (temp.two == node){
                 if (first == null)
@@ -100,11 +190,20 @@ public class GraphOfWays {
                 else
                     second = temp.one;
                 ways.remove(i);
+                --i;
             }
             if (second != null)
                 break;
         }
-        ways.add(new Way(first, second));
+        if (first != null && second != null) {
+            ways.add(new Way(first, second));
+            first.replaceNeighbor(node, second);
+            second.replaceNeighbor(node, first);
+            nodes.remove(node.getIndex());
+        } else {
+            System.out.println("Critical error");
+            System.exit(-1);
+        }
     }
 
     @Override
@@ -211,12 +310,17 @@ public class GraphOfWays {
             }
             if (!(s2 == test2 && s3 == test3 && s4 == test4)) {
                 System.out.println("Error nodes amount");
+            } else {
+                System.out.println("OK");
             }
         }
 
         public void testWaysAmount(int amount) {
             if (ways.size() != amount)
                 System.out.println("Error amount");
+            else {
+                System.out.println("OK");
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ package storageModel;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -15,18 +16,18 @@ public class Node {
 
     public Node(Point index) {
         previous = null;
-        time = 0;
+        time = -1.0;
         neighbors = new ArrayList<>();
         this.index = index;
     }
 
-    public boolean setIfLess(double newTime, Node newPrevious) {
-        if (newTime < time) {
-            time = newTime;
-            previous = newPrevious;
-            return true;
-        }
-        return false;
+    public Node(Point index, double time) {
+        this(index);
+        this.time = time;
+    }
+
+    public boolean isMoreThan(double time) {
+        return this.time < 0 || this.time > time;
     }
 
     public double getTime() {
@@ -35,6 +36,11 @@ public class Node {
 
     public Node getPrevious() {
         return previous;
+    }
+
+    public void setToDefault() {
+        time = -1.0;
+        previous = null;
     }
 
     public Point getIndex() {
@@ -65,5 +71,32 @@ public class Node {
     @Override
     public String toString() {
         return "Node: [" + index.x + ';' + index.y + "] Neighbors: " + neighbors.size();
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    public void setPrevious(Node previous) {
+        this.previous = previous;
+    }
+
+    public static class NodeComparator implements Comparator<Node> {
+        @Override
+        public int compare(Node o1, Node o2) {
+            if (o1.time > o2.time)
+                return 1;
+            if (o1.time < o2.time)
+                return -1;
+            return 0;
+        }
+    }
+
+    public void removeNeighbor(Node node) {
+        neighbors.remove(node);
+    }
+
+    public double distance(Node node) {
+        return index.distance(node.index);
     }
 }

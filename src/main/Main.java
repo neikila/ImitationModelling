@@ -34,9 +34,8 @@ public class Main {
 
         XMLParser parser = new XMLParser(settings.getXmlResourceFilename());
         Storage storage = new Storage(parser);
-        storage.printAllWalls();
-        storage.printAllBarriers();
-
+//        storage.printAllWalls();
+//        storage.printAllBarriers();
     }
 
     public static void previousMain(Settings settings) {
