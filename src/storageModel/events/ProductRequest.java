@@ -9,8 +9,8 @@ public class ProductRequest extends Event {
     private Product product;
     private int amount;
 
-    public ProductRequest(double date, EventType eventType, Product product, int amount) {
-        super(date, eventType);
+    public ProductRequest(double date, Product product, int amount) {
+        super(date, EventType.ProductRequest);
         this.product = product;
         this.amount = amount;
     }

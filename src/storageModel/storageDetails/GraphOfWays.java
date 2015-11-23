@@ -55,7 +55,7 @@ public class GraphOfWays {
                 }
             }
         }
-        System.out.println("Size = " + nodes.size());
+//        System.out.println("Size = " + nodes.size());
 
         updateNeighbors();
 
@@ -72,8 +72,6 @@ public class GraphOfWays {
 
 //        System.out.println("Time: " + getTimeBetween(new Point(0,0), new Point(2,0)));
 
-//        test.testNodesAmount(4, 2, 0);
-//        test.testWaysAmount(7);
 
 //        getTimeBetween(new Point(0,0), new Point(6,1));
 //
@@ -91,6 +89,10 @@ public class GraphOfWays {
     }
 
     public double getTimeBetween(Point fromPoint, Point toPoint) {
+//        Tests test = new Tests();
+//        test.testNodesAmount(4, 2, 0);
+//        test.testWaysAmount(7);
+
         Node from = nodes.get(fromPoint);
         Node to = nodes.get(toPoint);
         boolean fromFlag = false;
@@ -105,10 +107,6 @@ public class GraphOfWays {
         }
         if (from == null || to == null)
             return -1.0;
-
-//        Tests test = new Tests();
-//        test.testNodesAmount(5, 2, 0);
-//        test.testWaysAmount(8);
 
         PriorityQueue<Node> front = new PriorityQueue<>(new Node.NodeComparator());
         from.setTime(0.0);
@@ -143,6 +141,10 @@ public class GraphOfWays {
             removeNode(to);
 
         nodes.values().forEach(Node::setToDefault);
+
+//        test.testNodesAmount(4, 2, 0);
+//        test.testWaysAmount(7);
+
         return to.getTime();
     }
 
@@ -285,7 +287,12 @@ public class GraphOfWays {
         }
 
         public boolean interfereWith(Point point) {
-            return GraphOfWays.this.isOnTheLine(one.getIndex(), two.getIndex(), point);
+            Point one = this.one.getIndex();
+            Point two = this.two.getIndex();
+            return Math.abs(one.x - two.x) == Math.abs(one.x - point.x) + Math.abs(point.x - two.x) && one.x != two.x &&
+                    one.y == point.y ||
+                    Math.abs(one.y - two.y) == Math.abs(one.y - point.y) + Math.abs(point.y - two.y) && one.y != two.y &&
+                    one.x == point.x;
         }
 
         @Override

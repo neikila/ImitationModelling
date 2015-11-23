@@ -25,8 +25,9 @@ public class Model implements Runnable {
         possibleProducts = productsParser.getProducts();
         queue = new PriorityQueue<>(new EventComparator());
         worker = new Worker(new Point(0,0));
-        queue.add(new ProductIncome(0, EventType.ProductIncome,
-                possibleProducts.get(new Random().nextInt(possibleProducts.size())), 1));
+        Product product = possibleProducts.get(new Random().nextInt(possibleProducts.size()));
+        queue.add(new ProductIncome(0, product, 2));
+        queue.add(new ProductRequest(1, product, 1));
     }
 
     @Override
@@ -72,7 +73,7 @@ public class Model implements Runnable {
         Point to = storage.getExitPoint();
         System.out.println("To: " + to);
         double totalWeight = request.getAmount() * request.getProduct().getWeightOfUnit();
-        Section section = storage.findSectionForProduct(request.getProduct(), totalWeight);
+        Section section = storage.findSectionWithProduct(request.getProduct(), request.getAmount());
         if (section == null) {
             System.out.println("No such product.\n" +
                     "Product " + request.getProduct() + "\n" +

@@ -57,7 +57,7 @@ public class Storage {
     public Section findSectionForProduct(Product product, double weight) {
         List<Section> possibleSections = new ArrayList<>();
         for (Section section: sections) {
-            if (section.isAcceptable(product, weight)) {
+            if (section.isAcceptable(product, weight) && section.getIndex().x == 1 && section.getIndex().y == 1) {
                 possibleSections.add(section);
             }
         }
@@ -71,7 +71,10 @@ public class Storage {
     public Section findSectionWithProduct(Product product, int amount) {
         List<Section> possibleSections = new ArrayList<>();
         for (Section section: sections) {
-            if (section.getProduct().getId() == product.getId() && section.getAmount() > amount) {
+            Product sectionProduct = section.getProduct();
+            if (sectionProduct != null &&
+                    sectionProduct.getId() == product.getId() &&
+                    section.getAmount() > amount) {
                 possibleSections.add(section);
             }
         }
