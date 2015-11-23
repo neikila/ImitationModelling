@@ -5,11 +5,11 @@ import storageModel.Product;
 /**
  * Created by neikila on 22.11.15.
  */
-public class ProductIncome extends Event {
+public class ProductRequest extends Event {
     private Product product;
     private int amount;
 
-    public ProductIncome(double date, EventType eventType, Product product, int amount) {
+    public ProductRequest(double date, EventType eventType, Product product, int amount) {
         super(date, eventType);
         this.product = product;
         this.amount = amount;

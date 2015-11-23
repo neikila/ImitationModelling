@@ -30,4 +30,9 @@ public class Product {
     public double getWeightOfUnit() {
         return weightOfUnit;
     }
+
+    @Override
+    public String toString() {
+        return "Product: " + name;
+    }
 }

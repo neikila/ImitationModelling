@@ -93,10 +93,6 @@ public class Section {
         return maxWeightOfSection;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     public int getProduct(int amount) {
         if (this.amount > amount) {
             this.amount -= amount;
@@ -110,14 +106,43 @@ public class Section {
     }
 
     public boolean isAcceptable(Product product, double weight) {
-        return ((this.product == null || this.product == product) &&
+        return ((this.product == null || this.product.getId() == product.getId()) &&
                 (maxWeightOfSection - product.getWeightOfUnit() * amount) > weight);
+    }
+
+    public Point getPointAccess() {
+        Point from = new Point(index);
+        switch (possibleDirection) {
+            case Down:
+                from.translate(0, -1);
+                break;
+            case Up:
+                from.translate(0, 1);
+                break;
+            case Left:
+                from.translate(-1, 0);
+                break;
+            case Right:
+                from.translate(1, 0);
+                break;
+        }
+        return from;
     }
 
     public void setProduct(Product product) {
         this.product = product;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void addProduct(Product product, int amount) {
+        if (this.product == null || product.getId() == this.product.getId()) {
+            this.product = product;
+            this.amount += amount;
+        }
+    }
     @Override
     public String toString() {
         return "id: " + getId() + "; index[" + getIndex().x + ";" + getIndex().y + ']';

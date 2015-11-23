@@ -61,7 +61,25 @@ public class Storage {
                 possibleSections.add(section);
             }
         }
-        return possibleSections.get(new Random().nextInt(possibleSections.size()));
+        if (possibleSections.size() > 0) {
+            return possibleSections.get(new Random().nextInt(possibleSections.size()));
+        } else {
+            return null;
+        }
+    }
+
+    public Section findSectionWithProduct(Product product, int amount) {
+        List<Section> possibleSections = new ArrayList<>();
+        for (Section section: sections) {
+            if (section.getProduct().getId() == product.getId() && section.getAmount() > amount) {
+                possibleSections.add(section);
+            }
+        }
+        if (possibleSections.size() > 0) {
+            return possibleSections.get(new Random().nextInt(possibleSections.size()));
+        } else {
+            return null;
+        }
     }
 
     public double getTimeDelay(Point from, Point to) {
