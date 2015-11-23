@@ -46,7 +46,7 @@
     <rack>
       <position x="2000" y="2000"/>
       <size x="2000" y="2000"/>
-      <levels>5</levels>
+      <levels>1</levels>
       <maxWeightPerSection>10</maxWeightPerSection>
       <sectionSize x="2000" y="2000"/>
       <direction>Left</direction>
@@ -54,35 +54,35 @@
     <rack>
       <position x="4000" y="2000"/>
       <size x="6000" y="4000"/>
-      <levels>5</levels>
+      <levels>1</levels>
       <maxWeightPerSection>10</maxWeightPerSection>
       <sectionSize x="2000" y="2000"/>
     </rack>
     <rack>
       <position x="10000" y="2000"/>
       <size x="2000" y="2000"/>
-      <levels>5</levels>
+      <levels>1</levels>
       <maxWeightPerSection>13</maxWeightPerSection>
       <sectionSize x="2000" y="2000"/>
     </rack>
     <rack>
       <position x="2000" y="8000"/>
       <size x="2000" y="2000"/>
-      <levels>5</levels>
+      <levels>1</levels>
       <maxWeightPerSection>1000</maxWeightPerSection>
       <sectionSize x="2000" y="2000"/>
     </rack>
     <rack>
       <position x="4000" y="8000"/>
       <size x="6000" y="4000"/>
-      <levels>5</levels>
+      <levels>1</levels>
       <maxWeightPerSection>10</maxWeightPerSection>
       <sectionSize x="2000" y="2000"/>
     </rack>
     <rack>
       <position x="10000" y="8000"/>
       <size x="2000" y="2000"/>
-      <levels>5</levels>
+      <levels>1</levels>
       <maxWeightPerSection>10</maxWeightPerSection>
       <sectionSize x="2000" y="2000"/>
     </rack>

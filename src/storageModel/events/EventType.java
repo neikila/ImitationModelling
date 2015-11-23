@@ -5,5 +5,8 @@ package storageModel.events;
  */
 public enum EventType {
     ProductIncome,
-    ProductRequest
+    ProductRequest,
+    PointAchieved,
+    ProductLoaded,
+    ProductReleased
 }

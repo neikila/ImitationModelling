@@ -23,8 +23,8 @@ public class Event {
     @Override
     public String toString() {
         return "Event{" +
-                "date=" + date +
-                ", eventType=" + eventType +
+                "date = " + date +
+                ", eventType = " + eventType +
                 '}';
     }
 }

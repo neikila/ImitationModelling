@@ -89,6 +89,8 @@ public class GraphOfWays {
     }
 
     public double getTimeBetween(Point fromPoint, Point toPoint) {
+        if (fromPoint.equals(toPoint))
+            return 0.0;
 //        Tests test = new Tests();
 //        test.testNodesAmount(4, 2, 0);
 //        test.testWaysAmount(7);

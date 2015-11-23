@@ -57,7 +57,7 @@ public class Storage {
     public Section findSectionForProduct(Product product, double weight) {
         List<Section> possibleSections = new ArrayList<>();
         for (Section section: sections) {
-            if (section.isAcceptable(product, weight) && section.getIndex().x == 1 && section.getIndex().y == 1) {
+            if (section.isAcceptable(product, weight)) {
                 possibleSections.add(section);
             }
         }
