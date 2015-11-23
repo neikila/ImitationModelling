@@ -35,7 +35,7 @@ public class Main {
 
         XMLStorageParser parser = new XMLStorageParser(settings.getXmlResourceFilename());
         XMLProductsParser productsParser = new XMLProductsParser("PossibleProducts.xml");
-        new storageModel.Model(parser, productsParser);
+        new storageModel.Model(parser, productsParser).run();
 //        storage.printAllWalls();
 //        storage.printAllBarriers();
     }

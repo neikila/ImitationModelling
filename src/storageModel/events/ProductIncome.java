@@ -7,16 +7,16 @@ import storageModel.Product;
  */
 public class ProductIncome extends Event {
     private Product product;
-    private double weight;
+    private double amount;
 
-    public ProductIncome(double date, EventType eventType, Product product, double weight) {
+    public ProductIncome(double date, EventType eventType, Product product, int amount) {
         super(date, eventType);
         this.product = product;
-        this.weight = weight;
+        this.amount = amount;
     }
 
-    public double getWeight() {
-        return weight;
+    public double getAmount() {
+        return amount;
     }
 
     public Product getProduct() {

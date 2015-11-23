@@ -1,4 +1,6 @@
-package storageModel;
+package storageModel.storageDetails;
+
+import storageModel.Direction;
 
 import java.awt.*;
 

@@ -4,9 +4,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import storageModel.Barrier;
+import storageModel.storageDetails.Barrier;
 import storageModel.Direction;
-import storageModel.Rack;
+import storageModel.storageDetails.Rack;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
@@ -20,6 +20,8 @@ public class XMLStorageParser extends XMLParser {
     public static final String BOUNDS = "bounds";
     public static final String BARRIERS = "barriers";
     public static final String RACKS = "racks";
+    public static final String ENTRANCE = "entrance";
+    public static final String EXIT = "exit";
 
     public XMLStorageParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
         super(fileName);
@@ -35,6 +37,14 @@ public class XMLStorageParser extends XMLParser {
 
     public List<Rack> getRacks() {
         return getArrayOfSomethingFromElement(root, RACKS, this::getRack);
+    }
+
+    public List<Point> getEntranceBounds() {
+        return getArrayOfSomethingFromElement(root, ENTRANCE, this::getPoint);
+    }
+
+    public List<Point> getExitBounds() {
+        return getArrayOfSomethingFromElement(root, EXIT, this::getPoint);
     }
 
     private Barrier getBarrier(Element node) {

@@ -1,4 +1,4 @@
-package storageModel;
+package storageModel.storageDetails;
 
 import java.awt.*;
 

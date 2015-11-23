@@ -1,10 +1,12 @@
 package storageModel;
 
 import resourse.XMLStorageParser;
+import storageModel.storageDetails.*;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by neikila on 19.11.15.
@@ -16,6 +18,8 @@ public class Storage {
     private List<Rack> racks;
     private Point box;
     private GraphOfWays graph;
+    private Gates entrance;
+    private Gates exit;
 
     public Storage(XMLStorageParser parser) {
         box = new Point(2000, 2000);
@@ -26,6 +30,47 @@ public class Storage {
         setSections();
 
         graph = new GraphOfWays(this);
+        List<Point> points = parser.getEntranceBounds();
+        List<Point> entrancePoints = new ArrayList<>();
+        // TODO захардкожено располоение горизонтальное
+        for (int x = points.get(0).x; x < points.get(1).x; x += box.x) {
+            entrancePoints.add(new Point(x / box.x, 6));
+        }
+        entrance = new Gates(entrancePoints);
+
+        points = parser.getExitBounds();
+        List<Point> exitPoints = new ArrayList<>();
+        for (int x = points.get(0).x; x < points.get(1).x; x += box.x) {
+            exitPoints.add(new Point(x / box.x, 0));
+        }
+        exit = new Gates(exitPoints);
+    }
+
+    public Point getEntrancePoint() {
+        return entrance.getRandomField();
+    }
+
+    public Point getExitPoint() {
+        return exit.getRandomField();
+    }
+
+    public Section findSectionForProduct(Product product, double weight) {
+        List<Section> possibleSections = new ArrayList<>();
+        for (Section section: sections) {
+            if (section.isAcceptable(product, weight)) {
+                possibleSections.add(section);
+            }
+        }
+        return possibleSections.get(new Random().nextInt(possibleSections.size()));
+    }
+
+    public double getTimeDelay(Point from, Point to) {
+        return graph.getTimeBetween(from, to);
+    }
+
+    public void putProduct(Section section, Product product, int amount) {
+        section.setAmount(amount);
+        section.setProduct(product);
     }
 
     public void setSections() {
@@ -56,7 +101,8 @@ public class Storage {
                                         sectionSize,
                                         k,
                                         rack.getDirection(),
-                                        new Polygon(x, y, 4)
+                                        new Polygon(x, y, 4),
+                                        rack.getMaxWeightPerSection()
                                 )
                         );
                     }

@@ -1,4 +1,7 @@
-package storageModel;
+package storageModel.storageDetails;
+
+import storageModel.Node;
+import storageModel.Storage;
 
 import java.awt.*;
 import java.util.*;
@@ -56,21 +59,21 @@ public class GraphOfWays {
 
         updateNeighbors();
 
-        Tests test = new Tests();
-        test.testNodesAmount(27, 2, 0);
+//        Tests test = new Tests();
+//        test.testNodesAmount(27, 2, 0);
 
         minimise();
 
-        test.testNodesAmount(4, 2, 0);
+//        test.testNodesAmount(4, 2, 0);
 
         ways = new ArrayList<>();
         updateWays();
-        test.testWaysAmount(7);
+//        test.testWaysAmount(7);
 
-        System.out.println("Time: " + getTimeBetween(new Point(0,0), new Point(2,0)));
+//        System.out.println("Time: " + getTimeBetween(new Point(0,0), new Point(2,0)));
 
-        test.testNodesAmount(4, 2, 0);
-        test.testWaysAmount(7);
+//        test.testNodesAmount(4, 2, 0);
+//        test.testWaysAmount(7);
 
 //        getTimeBetween(new Point(0,0), new Point(6,1));
 //
