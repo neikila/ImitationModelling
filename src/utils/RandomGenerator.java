@@ -23,4 +23,8 @@ public class RandomGenerator {
     public double getMiddleTime(double middle, double delta) {
         return random.nextDouble() % delta + middle - delta / 2;
     }
+
+    public double fiftyFifty() {
+        return random.nextInt(2);
+    }
 }
