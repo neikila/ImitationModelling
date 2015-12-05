@@ -34,6 +34,15 @@
   <xsd:complexType name="point">
     <xsd:attribute name="x" type="xsd:double"/>
     <xsd:attribute name="y" type="xsd:double"/>
+    <xsd:attribute name="metric" default="mm">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="mm"/>
+          <xsd:enumeration value="m"/>
+          <xsd:enumeration value="in"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
   </xsd:complexType>
 
   <xsd:complexType name="polygon">

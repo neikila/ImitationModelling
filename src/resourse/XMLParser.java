@@ -51,7 +51,18 @@ public class XMLParser {
     protected Point getPoint(Element node) {
         int x = Integer.parseInt(node.getAttribute("x"));
         int y = Integer.parseInt(node.getAttribute("y"));
-        return new Point(x, y);
+        double multiplier = 1;                              // Default mm, so multiplier = 1
+        if (node.hasAttribute("metric")) {
+            switch(node.getAttribute("metric")) {
+                case "m":
+                    multiplier = 1000;
+                    break;
+                case "in":
+                    multiplier = 25.4;
+                    break;
+            }
+        }
+        return new Point((int) (x * multiplier), (int) (y * multiplier));
     }
 
     protected int[] toIntArray(List<Integer> list) {
