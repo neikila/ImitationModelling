@@ -161,11 +161,6 @@ public class Storage {
             }
         }
 
-//        for (Section el: sections) {
-//            if (el.getLevel() == 1) {
-//                System.out.println(el.toString() + " Direction: " + el.getPossibleDirection());
-//            }
-//        }
     }
 
     public boolean isEmpty(Point point) {
@@ -222,5 +217,18 @@ public class Storage {
         for (Barrier barrier : barriers) {
             System.out.println(barrier);
         }
+    }
+
+    public Section getRandomSectionWithProduct() {
+        List <Section> filledSections = new ArrayList<>();
+        for (Section section: sections) {
+            if (section.getProduct() != null) {
+                filledSections.add(section);
+            }
+        }
+        if (filledSections.size() != 0)
+            return filledSections.get(new Random().nextInt(filledSections.size()));
+        else
+            return null;
     }
 }

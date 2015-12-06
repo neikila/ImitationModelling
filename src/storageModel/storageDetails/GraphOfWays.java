@@ -55,28 +55,11 @@ public class GraphOfWays {
                 }
             }
         }
-//        System.out.println("Size = " + nodes.size());
 
         updateNeighbors();
-
-//        Tests test = new Tests();
-//        test.testNodesAmount(27, 2, 0);
-
         minimise();
-
-//        test.testNodesAmount(4, 2, 0);
-
         ways = new ArrayList<>();
         updateWays();
-//        test.testWaysAmount(7);
-
-//        System.out.println("Time: " + getTimeBetween(new Point(0,0), new Point(2,0)));
-
-
-//        getTimeBetween(new Point(0,0), new Point(6,1));
-//
-//        test.testNodesAmount(4, 2, 0);
-//        test.testWaysAmount(7);
     }
 
     private double count(Node from, Node to) {
@@ -91,9 +74,6 @@ public class GraphOfWays {
     public double getTimeBetween(Point fromPoint, Point toPoint) {
         if (fromPoint.equals(toPoint))
             return 0.0;
-//        Tests test = new Tests();
-//        test.testNodesAmount(4, 2, 0);
-//        test.testWaysAmount(7);
 
         Node from = nodes.get(fromPoint);
         Node to = nodes.get(toPoint);
@@ -129,13 +109,6 @@ public class GraphOfWays {
                 }
             }
         }
-        Node current = to;
-        System.out.println("The way");
-        while (current != from) {
-            System.out.println(current);
-            current = current.getPrevious();
-        }
-        System.out.println(current);
 
         if (fromFlag)
             removeNode(from);
@@ -143,9 +116,6 @@ public class GraphOfWays {
             removeNode(to);
 
         nodes.values().forEach(Node::setToDefault);
-
-//        test.testNodesAmount(4, 2, 0);
-//        test.testWaysAmount(7);
 
         return to.getTime();
     }

@@ -63,7 +63,7 @@ public class Worker {
                     task.sectionFrom.getProduct(task.amount);
                 }
                 delay = storage.getTimeDelay(position, task.to);
-                return new PointAchieved(Model.time + delay, task.from, this);
+                return new PointAchieved(Model.time + delay, task.to, this);
             case GetToRelease:
                 state = State.Releasing;
                 position = task.to;
@@ -73,10 +73,9 @@ public class Worker {
                 state = State.Free;
                 if (task.sectionTo != null) {
                     task.sectionTo.addProduct(task.product, task.amount);
-                    System.out.println(task.sectionTo.toString() + "\n" +
-                            task.sectionTo.getProduct() + "\n" +
-                            "Amount = " + task.sectionTo.getAmount());
-
+//                    System.out.println(task.sectionTo.toString() + "\n" +
+//                            task.sectionTo.getProduct() + "\n" +
+//                            "Amount = " + task.sectionTo.getAmount());
                 }
                 break;
         }
@@ -122,7 +121,7 @@ public class Worker {
 
     public void handleProductIncome(ProductIncome income) {
         Point from = storage.getEntrancePoint();
-        System.out.println("from: " + from);
+        System.out.println("From   :{'x': " + from.x + ", 'y': " + from.y + '}');
         double totalWeight = income.getAmount() * income.getProduct().getWeightOfUnit();
         Section section = storage.findSectionForProduct(income.getProduct(), totalWeight);
         if (section == null) {
@@ -131,19 +130,15 @@ public class Worker {
                     "Amount " + income.getAmount());
             return;
         } else {
-            System.out.println(section.getIndex());
+            System.out.println("Section:{'x': " + section.getIndex().x + ", 'y': " + section.getIndex().y + '}');
         }
         Point to = section.getPointAccess();
-        System.out.println("To: " + to);
-        double timeDelay = storage.getTimeDelay(from, to);
-        System.out.println("Time delay = " + timeDelay);
-
         task = new Task(from, to, null, section, income.getProduct(), income.getAmount());
     }
 
     public void handleProductRequest(ProductRequest request) {
         Point to = storage.getExitPoint();
-        System.out.println("To: " + to);
+        System.out.println("To     :{'x': " + to.x + ", 'y': " + to.y + '}');
         Section section = storage.findSectionWithProduct(request.getProduct(), request.getAmount());
         if (section == null) {
             System.out.println("No such product.\n" +
@@ -152,7 +147,7 @@ public class Worker {
             return;
         }
         Point from = section.getPointAccess();
-        System.out.println("from: " + from);
+        System.out.println("Section:{'x': " + section.getIndex().x + ", 'y': " + section.getIndex().y + '}');
         double timeDelay = storage.getTimeDelay(from, to);
         System.out.println("Time delay = " + timeDelay);
 
