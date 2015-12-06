@@ -20,7 +20,12 @@ public class Model implements Runnable {
     private PriorityQueue <Event> queue;
     private Worker worker;
     private PriorityQueue <Event> queueOfInOut;
+    private double stopGenerating;
+    private double deadline;
     public static double time = 0.0;
+
+    private boolean isRequestExist;
+    private boolean isIncomeExist;
 
     public Model(XMLStorageParser parser, XMLProductsParser productsParser) {
         this.storage = new Storage(parser);
@@ -28,9 +33,17 @@ public class Model implements Runnable {
         queue = new PriorityQueue<>(new Event.EventComparator());
         queueOfInOut = new PriorityQueue<>(new Event.EventComparator());
         worker = new Worker(new Point(0,0), storage);
-        Product product = possibleProducts.get(new Random().nextInt(possibleProducts.size()));
-        queue.add(new ProductIncome(0, product, 2));
-//        queue.add(new ProductRequest(1, product, 1));
+        ProductIncome event = (ProductIncome) generateIncome();
+        queue.add(event);
+        queue.add(new ProductRequest(
+                event.getDate() + 10,
+                event.getProduct(),
+                1 + new Random().nextInt(event.getAmount())
+        ));
+        isIncomeExist = true;
+        isRequestExist = true;
+        stopGenerating = 100;
+        deadline = 150;
     }
 
     // ТЗ
@@ -38,19 +51,21 @@ public class Model implements Runnable {
 
     @Override
     public void run() {
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty() && time < deadline) {
             Event currentEvent = queue.poll();
             time = currentEvent.getDate();
             System.out.println(currentEvent);
             switch (currentEvent.getEventType()) {
                 case ProductIncome:
-//                    queue.add(generateIncome());
+                    isIncomeExist = false;
+                    generateOutProductEvents();
                     System.out.println("{'Product': '" + ((ProductIncome)currentEvent).getProduct().getName() +
                             "', 'amount': " + ((ProductIncome)currentEvent).getAmount() + '}');
                     handleProductEvent(currentEvent);
                     break;
                 case ProductRequest:
-//                    queue.add(generateRequest());
+                    isRequestExist = false;
+                    generateOutProductEvents();
                     System.out.println("{'Product': '" + ((ProductRequest)currentEvent).getProduct().getName() +
                             "', 'amount': " + ((ProductRequest)currentEvent).getAmount() + '}');
                     handleProductEvent(currentEvent);
@@ -71,38 +86,35 @@ public class Model implements Runnable {
                         worker.handleProductEvent(queueOfInOut.poll());
                         queue.add(worker.nextState());
                     }
-                    // TODO remove it: it is only for testing
-                    if (counter == 0) {
-                        counter++;
-                        queue.add(generateRequest());
-                    }
                     break;
             }
         }
     }
 
-    // TODO remove it: it is only for testing
-    private int counter = 0;
 
     private Random random = new Random();
     private Random productRandom = new Random();
 
     private Event generateIncome() {
-        double delta = 10.0;
+        double delta = 50.0;
         return new ProductIncome(time + random.nextInt((int)delta * 100) / 100.0,
                 possibleProducts.get(productRandom.nextInt(possibleProducts.size())),
-                random.nextInt(10)
+                random.nextInt(10) + 1
         );
     }
 
     private Event generateRequest() {
-        double delta = 10.0;
+        double delta = 50.0;
         Section section = storage.getRandomSectionWithProduct();
-        return new ProductRequest(
-                time + random.nextInt((int)delta * 100) / 100.0,
-                section.getProduct(),
-                random.nextInt(section.getAmount()) + 1
-        );
+        if (section != null) {
+            return new ProductRequest(
+                    time + random.nextInt((int) delta * 100) / 100.0,
+                    section.getProduct(),
+                    random.nextInt(section.getAmount()) + 1
+            );
+        } else {
+            return null;
+        }
     }
 
     private void handleProductEvent(Event currentEvent) {
@@ -112,6 +124,25 @@ public class Model implements Runnable {
         } else {
             System.out.println("To queue");
             queueOfInOut.add(currentEvent);
+        }
+    }
+
+    private void generateOutProductEvents() {
+        if (time < stopGenerating) {
+            if (!isIncomeExist) {
+                Event event = generateIncome();
+                queue.add(event);
+                System.out.println("DEBUG: generate INCOME. DATE: " + event.getDate());
+                isIncomeExist = true;
+            }
+            if (!isRequestExist) {
+                Event request = generateRequest();
+                if (request != null) {
+                    queue.add(request);
+                    System.out.println("DEBUG: generate REQUEST. DATE: " + request.getDate());
+                    isRequestExist = true;
+                }
+            }
         }
     }
 }
