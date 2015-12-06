@@ -24,7 +24,7 @@ public class XMLParser {
     protected Element root;
 
     public XMLParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
-        File fXmlFile = new File("res/" + fileName);
+        File fXmlFile = new File("res", fileName);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(fXmlFile);
