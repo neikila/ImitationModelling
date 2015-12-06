@@ -50,4 +50,15 @@ public class Event {
             return false;
         }
     }
+
+    /**
+     * Created by neikila on 31.10.15.
+     */
+    public enum EventType {
+        ProductIncome,
+        ProductRequest,
+        PointAchieved,
+        ProductLoaded,
+        ProductReleased
+    }
 }
