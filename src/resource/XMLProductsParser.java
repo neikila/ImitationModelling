@@ -1,4 +1,4 @@
-package resourse;
+package resource;
 
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;

@@ -1,6 +1,6 @@
 package storageModel;
 
-import resourse.XMLStorageParser;
+import resource.XMLStorageParser;
 import storageModel.storageDetails.*;
 
 import java.awt.*;

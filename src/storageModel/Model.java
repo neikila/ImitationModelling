@@ -1,7 +1,7 @@
 package storageModel;
 
-import resourse.XMLProductsParser;
-import resourse.XMLStorageParser;
+import resource.XMLProductsParser;
+import resource.XMLStorageParser;
 import storageModel.events.Event;
 import storageModel.events.*;
 import storageModel.storageDetails.Section;

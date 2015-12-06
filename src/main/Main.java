@@ -1,7 +1,7 @@
 package main;
 
-import resourse.XMLProductsParser;
-import resourse.XMLStorageParser;
+import resource.XMLProductsParser;
+import resource.XMLStorageParser;
 
 import java.io.PrintStream;
 
