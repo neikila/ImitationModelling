@@ -74,7 +74,7 @@ public class Storage {
             Product sectionProduct = section.getProduct();
             if (sectionProduct != null &&
                     sectionProduct.getId() == product.getId() &&
-                    section.getAmount() > amount) {
+                    section.getAmount() >= amount) {
                 possibleSections.add(section);
             }
         }
