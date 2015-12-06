@@ -1,7 +1,5 @@
 package storageModel.storageDetails;
 
-import storageModel.Direction;
-
 import java.awt.*;
 
 /**
@@ -13,14 +11,14 @@ public class Rack {
     private int levels;
     private double maxWeightPerSection;
     private Point sectionSize;
-    private Direction direction;
+    private Section.Direction direction;
 
     public Rack(Point coordinate, Point size, int levels, double maxWeightPerSection, Point sectionSize) {
         this(coordinate, size,levels, maxWeightPerSection, sectionSize, null);
     }
 
     public Rack(Point coordinate, Point size, int levels,
-                double maxWeightPerSection, Point sectionSize, Direction direction) {
+                double maxWeightPerSection, Point sectionSize, Section.Direction direction) {
         this.coordinate = coordinate;
         this.size = size;
         this.levels = levels;
@@ -49,7 +47,7 @@ public class Rack {
         return sectionSize;
     }
 
-    public Direction getDirection() {
+    public Section.Direction getDirection() {
         return direction;
     }
 }

@@ -5,8 +5,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import storageModel.storageDetails.Barrier;
-import storageModel.Direction;
 import storageModel.storageDetails.Rack;
+import storageModel.storageDetails.Section;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
@@ -81,9 +81,9 @@ public class XMLStorageParser extends XMLParser {
         double maxWeightPerSection = Double.parseDouble(el.getElementsByTagName("maxWeightPerSection").item(0).getTextContent());
         Point sectionSize = getPoint((Element)el.getElementsByTagName("sectionSize").item(0));
         NodeList direction = el.getElementsByTagName("direction");
-        Direction possibleDirection = null;
+        Section.Direction possibleDirection = null;
         if (direction.getLength() > 0) {
-            possibleDirection = Direction.valueOf(direction.item(0).getTextContent());
+            possibleDirection = Section.Direction.valueOf(direction.item(0).getTextContent());
         }
 
         return new Rack(position, size, levels, maxWeightPerSection, sectionSize, possibleDirection);

@@ -1,6 +1,5 @@
 package storageModel.storageDetails;
 
-import storageModel.Direction;
 import storageModel.Product;
 
 import java.awt.*;
@@ -146,5 +145,17 @@ public class Section {
     @Override
     public String toString() {
         return "id: " + getId() + "; index[" + getIndex().x + ";" + getIndex().y + ']';
+    }
+
+    /**
+     * Created by neikila on 19.11.15.
+     */
+    public static enum Direction {
+        Vertical,
+        Up,
+        Down,
+        Horizontal,
+        Left,
+        Right
     }
 }

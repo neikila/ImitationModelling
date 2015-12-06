@@ -138,25 +138,25 @@ public class Storage {
             current = new Point(section.getCenter());
             current.translate(0, box.y);
             if (isEmpty(current)) {
-                section.setPossibleDirection(Direction.Up);
+                section.setPossibleDirection(Section.Direction.Up);
                 continue;
             }
             current = new Point(section.getCenter());
             current.translate(0, -box.y);
             if (isEmpty(current)) {
-                section.setPossibleDirection(Direction.Down);
+                section.setPossibleDirection(Section.Direction.Down);
                 continue;
             }
             current = new Point(section.getCenter());
             current.translate(box.x, 0);
             if (isEmpty(current)) {
-                section.setPossibleDirection(Direction.Right);
+                section.setPossibleDirection(Section.Direction.Right);
                 continue;
             }
             current = new Point(section.getCenter());
             current.translate(-box.x, 0);
             if (isEmpty(current)) {
-                section.setPossibleDirection(Direction.Left);
+                section.setPossibleDirection(Section.Direction.Left);
                 continue;
             }
         }
