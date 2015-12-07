@@ -50,7 +50,7 @@ public class Worker {
     }
 
     public Event nextState() {
-        double delay;
+        double delay = 0;
         switch (state) {
             case Free:
                 state = State.GetToLoad;
@@ -60,26 +60,29 @@ public class Worker {
                 state = State.Loading;
                 position = task.from;
                 delay = 3.0;
+                if (task.sectionFrom != null) {
+                    delay += task.sectionFrom.getLevel() * 4;
+                }
                 return new ProductLoaded(Model.time + delay, this);
             case Loading:
                 state = State.GetToRelease;
                 if (task.sectionFrom != null) {
                     task.sectionFrom.getProduct(task.amount);
                 }
-                delay = storage.getTimeDelay(position, task.to);
+                delay += storage.getTimeDelay(position, task.to);
                 return new PointAchieved(Model.time + delay, task.to, this);
             case GetToRelease:
                 state = State.Releasing;
                 position = task.to;
                 delay = 3.0;
+                if (task.sectionTo != null) {
+                    delay += task.sectionTo.getLevel() * 4;
+                }
                 return new ProductReleased(Model.time + delay, this);
             case Releasing:
                 state = State.Free;
                 if (task.sectionTo != null) {
                     task.sectionTo.addProduct(task.product, task.amount);
-//                    System.out.println(task.sectionTo.toString() + "\n" +
-//                            task.sectionTo.getProduct() + "\n" +
-//                            "Amount = " + task.sectionTo.getAmount());
                 }
                 break;
         }

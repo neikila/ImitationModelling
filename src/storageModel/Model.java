@@ -52,9 +52,6 @@ public class Model implements Runnable {
         deadline = 150;
     }
 
-    // ТЗ
-    // Единная система программной документации
-
     @Override
     public void run() {
         while (!queue.isEmpty() && time < deadline) {
@@ -80,7 +77,7 @@ public class Model implements Runnable {
                     queue.add(((PointAchieved) currentEvent).getWorker().nextState());
                     break;
                 case ProductLoaded:
-                    Event event= ((ProductLoaded) currentEvent).getWorker().nextState();
+                    Event event = ((ProductLoaded) currentEvent).getWorker().nextState();
                     queue.add(event);
                     break;
                 case ProductReleased:
