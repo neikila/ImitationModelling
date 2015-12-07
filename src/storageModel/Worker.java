@@ -3,6 +3,7 @@ package storageModel;
 import storageModel.events.*;
 import storageModel.events.Event;
 import storageModel.storageDetails.Section;
+import utils.Output;
 
 import java.awt.*;
 
@@ -16,13 +17,16 @@ public class Worker {
     private State state;
     private Storage storage;
     private Task task;
+    private Output out;
 
-    public Worker(Point position, Storage storage) {
+    public Worker(Point position, Storage storage, Output out) {
         id = lastId++;
         this.position = position;
         state = State.Free;
         this.storage = storage;
         task = null;
+
+        this.out = out;
     }
 
     public int getId() {
@@ -121,16 +125,16 @@ public class Worker {
 
     public void handleProductIncome(ProductIncome income) {
         Point from = storage.getEntrancePoint();
-        System.out.println("From   :{'x': " + from.x + ", 'y': " + from.y + '}');
+        out.printPoint("From   ", from);
         double totalWeight = income.getAmount() * income.getProduct().getWeightOfUnit();
         Section section = storage.findSectionForProduct(income.getProduct(), totalWeight);
         if (section == null) {
-            System.out.println("No place for product.\n" +
+            out.println("No place for product.\n" +
                     income.getProduct() + "\n" +
                     "Amount " + income.getAmount());
             return;
         } else {
-            System.out.println("Section:{'x': " + section.getIndex().x + ", 'y': " + section.getIndex().y + '}');
+            out.printPoint("Section", section.getIndex());
         }
         Point to = section.getPointAccess();
         task = new Task(from, to, null, section, income.getProduct(), income.getAmount());
@@ -138,23 +142,18 @@ public class Worker {
 
     public void handleProductRequest(ProductRequest request) {
         Point to = storage.getExitPoint();
-        System.out.println("To     :{'x': " + to.x + ", 'y': " + to.y + '}');
+        out.printPoint("To     ", to);
         Section section = storage.findSectionWithProduct(request.getProduct(), request.getAmount());
         if (section == null) {
-            System.out.println("No such product.\n" +
+            out.println("No such product.\n" +
                     request.getProduct() + "\n" +
                     "Amount " + request.getAmount());
             return;
         }
         Point from = section.getPointAccess();
-        System.out.println("Section:{'x': " + section.getIndex().x + ", 'y': " + section.getIndex().y + '}');
+        out.printPoint("Section", section.getIndex());
         double timeDelay = storage.getTimeDelay(from, to);
-        System.out.println("Time delay = " + timeDelay);
-
-//        System.out.println("Got " + section.getProduct(request.getAmount()) + "\n" +
-//                section + "\n" +
-//                section.getProduct() + "\n" +
-//                "Amount " + section.getAmount());
+        out.println("Time delay = " + timeDelay);
 
         task = new Task(from, to, section, null, request.getProduct(), request.getAmount());
     }

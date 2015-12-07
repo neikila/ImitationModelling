@@ -5,8 +5,10 @@ import resource.XMLStorageParser;
 import storageModel.events.Event;
 import storageModel.events.*;
 import storageModel.storageDetails.Section;
+import utils.Output;
 
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -27,12 +29,16 @@ public class Model implements Runnable {
     private boolean isRequestExist;
     private boolean isIncomeExist;
 
+    private Output out;
+
     public Model(XMLStorageParser parser, XMLProductsParser productsParser) {
-        this.storage = new Storage(parser);
+        out = new Output("log.txt", false);
+
+        this.storage = new Storage(parser, out);
         possibleProducts = productsParser.getProducts();
         queue = new PriorityQueue<>(new Event.EventComparator());
         queueOfInOut = new PriorityQueue<>(new Event.EventComparator());
-        worker = new Worker(new Point(0,0), storage);
+        worker = new Worker(new Point(0,0), storage, out);
         ProductIncome event = (ProductIncome) generateIncome();
         queue.add(event);
         queue.add(new ProductRequest(
@@ -54,25 +60,23 @@ public class Model implements Runnable {
         while (!queue.isEmpty() && time < deadline) {
             Event currentEvent = queue.poll();
             time = currentEvent.getDate();
-            System.out.println(currentEvent);
+            out.println(currentEvent);
             switch (currentEvent.getEventType()) {
                 case ProductIncome:
                     isIncomeExist = false;
                     generateOutProductEvents();
-                    System.out.println("{'Product': '" + ((ProductIncome)currentEvent).getProduct().getName() +
-                            "', 'amount': " + ((ProductIncome)currentEvent).getAmount() + '}');
+                    out.printProductEvent(currentEvent);
                     handleProductEvent(currentEvent);
                     break;
                 case ProductRequest:
                     isRequestExist = false;
                     generateOutProductEvents();
-                    System.out.println("{'Product': '" + ((ProductRequest)currentEvent).getProduct().getName() +
-                            "', 'amount': " + ((ProductRequest)currentEvent).getAmount() + '}');
+                    out.printProductEvent(currentEvent);
                     handleProductEvent(currentEvent);
                     break;
                 case PointAchieved:
                     Point point = ((PointAchieved)currentEvent).getPoint();
-                    System.out.println("Point  :{'x': " + point.x + ", 'y': " + point.y + '}');
+                    out.printPoint(point);
                     queue.add(((PointAchieved) currentEvent).getWorker().nextState());
                     break;
                 case ProductLoaded:
@@ -82,7 +86,7 @@ public class Model implements Runnable {
                 case ProductReleased:
                     ((ProductReleased) currentEvent).getWorker().nextState();
                     if (queueOfInOut.size() > 0) {
-                        System.out.println("From queue Out In");
+                        out.println("From queue Out In");
                         worker.handleProductEvent(queueOfInOut.poll());
                         queue.add(worker.nextState());
                     }
@@ -122,7 +126,7 @@ public class Model implements Runnable {
             worker.handleProductEvent(currentEvent);
             queue.add(worker.nextState());
         } else {
-            System.out.println("To queue");
+            out.println("To queue");
             queueOfInOut.add(currentEvent);
         }
     }
@@ -132,14 +136,14 @@ public class Model implements Runnable {
             if (!isIncomeExist) {
                 Event event = generateIncome();
                 queue.add(event);
-                System.out.println("DEBUG: generate INCOME. DATE: " + event.getDate());
+                out.debugPrintln("DEBUG: generate INCOME. DATE: " + event.getDate());
                 isIncomeExist = true;
             }
             if (!isRequestExist) {
                 Event request = generateRequest();
                 if (request != null) {
                     queue.add(request);
-                    System.out.println("DEBUG: generate REQUEST. DATE: " + request.getDate());
+                    out.debugPrintln("DEBUG: generate REQUEST. DATE: " + request.getDate());
                     isRequestExist = true;
                 }
             }

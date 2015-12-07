@@ -2,6 +2,7 @@ package storageModel;
 
 import resource.XMLStorageParser;
 import storageModel.storageDetails.*;
+import utils.Output;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,8 +21,11 @@ public class Storage {
     private GraphOfWays graph;
     private Gates entrance;
     private Gates exit;
+    private Output out;
 
-    public Storage(XMLStorageParser parser) {
+    public Storage(XMLStorageParser parser, Output out) {
+        this.out = out;
+
         box = new Point(2000, 2000);
         this.boundPoints = parser.getWallPoints();
         this.barriers = parser.getBarriers();
@@ -29,7 +33,7 @@ public class Storage {
         this.sections = new ArrayList<>();
         setSections();
 
-        graph = new GraphOfWays(this);
+        graph = new GraphOfWays(this, out);
         List<Point> points = parser.getEntranceBounds();
         List<Point> entrancePoints = new ArrayList<>();
         // TODO захардкожено располоение горизонтальное
@@ -195,27 +199,29 @@ public class Storage {
         return box;
     }
 
-    public void printAllSections() {
+    public void printAllSections(Output out) {
         for (Section el: sections) {
             if (el.getLevel() == 0) {
-                System.out.println("id: " + el.getId() + "; index[" + el.getIndex().x + ";" + el.getIndex().y + ']');
+                out.println("id: " + el.getId() + "; index[" + el.getIndex().x + ";" + el.getIndex().y + ']');
             }
         }
     }
 
-    public void printAllWalls() {
+    public void printAllWalls(Output out) {
         int size = boundPoints.size();
         for (int i = 0; i < size; ++i) {
-            System.out.format("a = [%d:%d]; b = [%d:%d]%n",
-                    boundPoints.get(i).x, boundPoints.get(i).y,
-                    boundPoints.get((i + 1) % size).x, boundPoints.get((i + 1) % size).y
+            out.println(
+                    String.format("a = [%d:%d]; b = [%d:%d]%n",
+                        boundPoints.get(i).x, boundPoints.get(i).y,
+                        boundPoints.get((i + 1) % size).x, boundPoints.get((i + 1) % size).y
+                    )
             );
         }
     }
 
-    public void printAllBarriers() {
+    public void printAllBarriers(Output out) {
         for (Barrier barrier : barriers) {
-            System.out.println(barrier);
+            out.println(barrier);
         }
     }
 

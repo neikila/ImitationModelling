@@ -1,6 +1,7 @@
 package storageModel.storageDetails;
 
 import storageModel.Storage;
+import utils.Output;
 
 import java.awt.*;
 import java.util.*;
@@ -12,13 +13,16 @@ import java.util.List;
 public class GraphOfWays {
     public final double DELAY_AT_THE_CORNER = 3.0;
     public final double DELAY_PER_METER = 1.0;
-    public Map<Point, Node> nodes;
-    public Point offset;
-    public Point step;
-    public Point size;
-    public List<Way> ways;
+    private Map<Point, Node> nodes;
+    private Point offset;
+    private Point step;
+    private Point size;
+    private List<Way> ways;
+    private Output out;
 
-    public GraphOfWays(Storage storage) {
+    public GraphOfWays(Storage storage, Output out) {
+        this.out = out;
+
         nodes = new HashMap<>();
         step = storage.getBox();
         offset = new Point(step.x / 2, step.y / 2);
@@ -177,7 +181,7 @@ public class GraphOfWays {
             second.replaceNeighbor(node, first);
             nodes.remove(node.getIndex());
         } else {
-            System.out.println("Critical error");
+            out.println("Critical error searching the way");
             System.exit(-1);
         }
     }
@@ -290,17 +294,17 @@ public class GraphOfWays {
                     ++s4;
             }
             if (!(s2 == test2 && s3 == test3 && s4 == test4)) {
-                System.out.println("Error nodes amount");
+                out.println("Error nodes amount");
             } else {
-                System.out.println("OK");
+                out.println("OK");
             }
         }
 
         public void testWaysAmount(int amount) {
             if (ways.size() != amount)
-                System.out.println("Error amount");
+                out.println("Error amount");
             else {
-                System.out.println("OK");
+                out.println("OK");
             }
         }
     }
