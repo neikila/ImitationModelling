@@ -120,8 +120,8 @@ public class Model implements Runnable {
 
     private void handleProductEvent(Event currentEvent) {
         if (worker.isFree()) {
-            worker.handleProductEvent(currentEvent);
-            queue.add(worker.nextState());
+            if (worker.handleProductEvent(currentEvent))
+                queue.add(worker.nextState());
         } else {
             out.println("To queue");
             queueOfInOut.add(currentEvent);

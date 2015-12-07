@@ -115,14 +115,15 @@ public class Worker {
         }
     }
 
-    public void handleProductEvent(Event event) {
+    public boolean handleProductEvent(Event event) {
         switch(event.getEventType()) {
             case ProductIncome:
                 handleProductIncome((ProductIncome) event);
-                break;
+                return true;
             case ProductRequest:
-                handleProductRequest((ProductRequest) event);
-                break;
+                return handleProductRequest((ProductRequest) event);
+            default:
+                return false;
         }
     }
 
@@ -143,7 +144,7 @@ public class Worker {
         task = new Task(from, to, null, section, income.getProduct(), income.getAmount());
     }
 
-    public void handleProductRequest(ProductRequest request) {
+    public boolean handleProductRequest(ProductRequest request) {
         Point to = storage.getExitPoint();
         out.printPoint("To     ", to);
         Section section = storage.findSectionWithProduct(request.getProduct(), request.getAmount());
@@ -151,7 +152,7 @@ public class Worker {
             out.println("No such product.\n" +
                     request.getProduct() + "\n" +
                     "Amount " + request.getAmount());
-            return;
+            return false;
         }
         Point from = section.getPointAccess();
         out.printPoint("Section", section.getIndex());
@@ -159,5 +160,6 @@ public class Worker {
         out.println("Time delay = " + timeDelay);
 
         task = new Task(from, to, section, null, request.getProduct(), request.getAmount());
+        return true;
     }
 }
