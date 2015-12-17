@@ -83,4 +83,22 @@ public class XMLParser {
         }
         return counter;
     }
+
+    protected boolean getBoolean(Element node, String targetNodeName) {
+        node.normalize();
+        NodeList list = node.getElementsByTagName(targetNodeName);
+        return Boolean.parseBoolean(list.item(0).getNodeValue());
+    }
+
+    protected String getString(Element element, String targetNodeName) {
+        element.normalize();
+        NodeList list = element.getElementsByTagName(targetNodeName);
+        return list.item(0).getNodeValue();
+    }
+
+    protected double getDouble(Element element, String targetNodeName) {
+        element.normalize();
+        NodeList list = element.getElementsByTagName(targetNodeName);
+        return Double.parseDouble(list.item(0).getNodeValue());
+    }
 }

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="storage.xsl"?>
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="settings.xsd">
+  <deadline>150.0</deadline>
+  <stopGenerating>100.0</stopGenerating>
+  <storageFilename>Storage.xml</storageFilename>
+  <productsFilename>PossibleProducts.xml</productsFilename>
+  <outputFile>output.log</outputFile>
+  <toConsole>false</toConsole>
+  <isDebug>true</isDebug>
+</settings>
