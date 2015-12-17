@@ -1,5 +1,6 @@
 package storageModel;
 
+import main.Settings;
 import resource.XMLProductsParser;
 import resource.XMLStorageParser;
 import storageModel.events.Event;
@@ -8,7 +9,6 @@ import storageModel.storageDetails.Section;
 import utils.Output;
 
 import java.awt.*;
-import java.io.File;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -31,8 +31,8 @@ public class Model implements Runnable {
 
     private Output out;
 
-    public Model(XMLStorageParser parser, XMLProductsParser productsParser) {
-        out = new Output("log.txt", false);
+    public Model(XMLStorageParser parser, XMLProductsParser productsParser, Settings settings) {
+        out = settings.getOutput();
 
         this.storage = new Storage(parser, out);
         possibleProducts = productsParser.getProducts();
@@ -48,8 +48,8 @@ public class Model implements Runnable {
         ));
         isIncomeExist = true;
         isRequestExist = true;
-        stopGenerating = 100;
-        deadline = 150;
+        stopGenerating = settings.getStopGenerating();
+        deadline = settings.getDeadline();
     }
 
     @Override

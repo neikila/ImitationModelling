@@ -14,6 +14,7 @@ public class XMLSettingsParser extends XMLParser {
     public static final String STORAGE_FILENAME = "storageFilename";
     public static final String PRODUCTS_FILENAME = "productsFilename";
     public static final String OUTPUT_FILE = "outputFile";
+    public static final String MODEL_SETTINGS = "modelSettings";
     public static final String TO_CONSOLE = "toConsole";
     public static final String IS_DEBUG = "isDebug";
 
@@ -39,6 +40,10 @@ public class XMLSettingsParser extends XMLParser {
 
     public String getOutputFile() {
         return getString(root, OUTPUT_FILE);
+    }
+
+    public String getModelSettingsFilename() {
+        return getString(root, MODEL_SETTINGS);
     }
 
     public boolean getToConsole() {

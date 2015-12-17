@@ -6,6 +6,7 @@
   <storageFilename>Storage.xml</storageFilename>
   <productsFilename>PossibleProducts.xml</productsFilename>
   <outputFile>output.log</outputFile>
+  <modelSettings>output.log</modelSettings>
   <toConsole>false</toConsole>
   <isDebug>true</isDebug>
 </settings>

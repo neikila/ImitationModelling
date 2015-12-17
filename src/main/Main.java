@@ -3,6 +3,7 @@ package main;
 import resource.XMLProductsParser;
 import resource.XMLSettingsParser;
 import resource.XMLStorageParser;
+import storageModel.Model;
 
 import java.io.PrintStream;
 
@@ -18,6 +19,6 @@ public class Main {
         Settings settings = new Settings(settingsParser);
         XMLStorageParser parser = new XMLStorageParser(settings.getStorageFilename());
         XMLProductsParser productsParser = new XMLProductsParser(settings.getProductsFilename());
-        new storageModel.Model(parser, productsParser).run();
+        new Model(parser, productsParser, settings).run();
     }
 }

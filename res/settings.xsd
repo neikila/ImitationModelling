@@ -8,6 +8,7 @@
         <xsd:element name="storageFilename" type="xsd:string"/>
         <xsd:element name="productsFilename" type="xsd:string"/>
         <xsd:element name="outputFile" type="xsd:string"/>
+        <xsd:element name="modelSettings" type="xsd:string"/>
         <xsd:element name="toConsole" type="xsd:boolean"/>
         <xsd:element name="isDebug" type="xsd:boolean"/>
       </xsd:sequence>
