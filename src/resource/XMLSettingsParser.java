@@ -9,8 +9,6 @@ import java.io.IOException;
  * Created by neikila on 19.11.15.
  */
 public class XMLSettingsParser extends XMLParser {
-    public static final String DEADLINE = "deadline";
-    public static final String STOP_GENERATING = "stopGenerating";
     public static final String STORAGE_FILENAME = "storageFilename";
     public static final String PRODUCTS_FILENAME = "productsFilename";
     public static final String OUTPUT_FILE = "outputFile";
@@ -20,14 +18,6 @@ public class XMLSettingsParser extends XMLParser {
 
     public XMLSettingsParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
         super(fileName);
-    }
-
-    public Double getDeadline() {
-        return getDouble(root, DEADLINE);
-    }
-
-    public Double getStopGenerating() {
-        return getDouble(root, STOP_GENERATING);
     }
 
     public String getStorageFilename() {

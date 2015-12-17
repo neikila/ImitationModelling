@@ -1,6 +1,7 @@
 package storageModel;
 
 import main.Settings;
+import resource.XMLModelSettingsParser;
 import resource.XMLProductsParser;
 import resource.XMLStorageParser;
 import storageModel.events.Event;
@@ -9,65 +10,62 @@ import storageModel.storageDetails.Section;
 import utils.Output;
 
 import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Random;
 
 /**
  * Created by neikila on 22.11.15.
  */
 public class Model implements Runnable {
-    private Storage storage;
     private List<Product> possibleProducts;
     private PriorityQueue <Event> queue;
     private Worker worker;
     private PriorityQueue <Event> queueOfInOut;
-    private double stopGenerating;
     private double deadline;
     public static double time = 0.0;
 
-    private boolean isRequestExist;
-    private boolean isIncomeExist;
+    final private Output out;
 
-    private Output out;
+    final private EventGenerator generator;
 
-    public Model(XMLStorageParser parser, XMLProductsParser productsParser, Settings settings) {
+    public Model(XMLStorageParser parser, XMLProductsParser productsParser, XMLModelSettingsParser modelSettings, Settings settings) {
         out = settings.getOutput();
 
-        this.storage = new Storage(parser, out);
+        Storage storage = new Storage(parser, out);
         possibleProducts = productsParser.getProducts();
         queue = new PriorityQueue<>(new Event.EventComparator());
         queueOfInOut = new PriorityQueue<>(new Event.EventComparator());
         worker = new Worker(new Point(0,0), storage, out);
-        ProductIncome event = (ProductIncome) generateIncome();
+        generator = new EventGenerator(out, storage, queue, modelSettings);
+
+        ProductIncome event = (ProductIncome) generator.generateIncome(time);
         queue.add(event);
         queue.add(new ProductRequest(
                 event.getDate() + 10,
                 event.getProduct(),
                 1 + new Random().nextInt(event.getAmount())
         ));
-        isIncomeExist = true;
-        isRequestExist = true;
-        stopGenerating = settings.getStopGenerating();
-        deadline = settings.getDeadline();
+
+        deadline = modelSettings.getDeadline();
     }
 
     @Override
     public void run() {
         while (!queue.isEmpty() && time < deadline) {
+            generator.check(time);
             Event currentEvent = queue.poll();
             time = currentEvent.getDate();
             out.println(currentEvent);
             switch (currentEvent.getEventType()) {
                 case ProductIncome:
-                    isIncomeExist = false;
-                    generateOutProductEvents();
+                    generator.setIncomeExist();
+                    generator.generateOutProductEvents(time);
                     out.printProductEvent(currentEvent);
                     handleProductEvent(currentEvent);
                     break;
                 case ProductRequest:
-                    isRequestExist = false;
-                    generateOutProductEvents();
+                    generator.setRequestExist();
+                    generator.generateOutProductEvents(time);
                     out.printProductEvent(currentEvent);
                     handleProductEvent(currentEvent);
                     break;
@@ -92,32 +90,6 @@ public class Model implements Runnable {
         }
     }
 
-
-    private Random random = new Random();
-    private Random productRandom = new Random();
-
-    private Event generateIncome() {
-        double delta = 50.0;
-        return new ProductIncome(time + random.nextInt((int)delta * 100) / 100.0,
-                possibleProducts.get(productRandom.nextInt(possibleProducts.size())),
-                random.nextInt(10) + 1
-        );
-    }
-
-    private Event generateRequest() {
-        double delta = 50.0;
-        Section section = storage.getRandomSectionWithProduct();
-        if (section != null) {
-            return new ProductRequest(
-                    time + random.nextInt((int) delta * 100) / 100.0,
-                    section.getProduct(),
-                    random.nextInt(section.getAmount()) + 1
-            );
-        } else {
-            return null;
-        }
-    }
-
     private void handleProductEvent(Event currentEvent) {
         if (worker.isFree()) {
             if (worker.handleProductEvent(currentEvent))
@@ -128,20 +100,85 @@ public class Model implements Runnable {
         }
     }
 
-    private void generateOutProductEvents() {
-        if (time < stopGenerating) {
-            if (!isIncomeExist) {
-                Event event = generateIncome();
-                queue.add(event);
-                out.debugPrintln("DEBUG: generate INCOME. DATE: " + event.getDate());
-                isIncomeExist = true;
+
+    public class EventGenerator {
+        private boolean stopGenerating;
+        final private double stopTime;
+
+        private boolean isRequestExist;
+        private boolean isIncomeExist;
+
+        private Random random;
+        private Random productRandom;
+
+        private Output output;
+
+        private Storage storage;
+        private Queue<Event> queue;
+
+        public EventGenerator(Output output, Storage storage, Queue<Event> queue, XMLModelSettingsParser parser) {
+            this.output = output;
+            random = new Random();
+            productRandom = new Random();
+            stopGenerating = false;
+            isIncomeExist = false;
+            isRequestExist = false;
+            this.stopTime = parser.getStopGenerating();
+            this.storage = storage;
+            this.queue = queue;
+        }
+
+        public void check(double time) {
+            if (time > stopTime) {
+                stopGenerating = true;
             }
-            if (!isRequestExist) {
-                Event request = generateRequest();
-                if (request != null) {
-                    queue.add(request);
-                    out.debugPrintln("DEBUG: generate REQUEST. DATE: " + request.getDate());
-                    isRequestExist = true;
+        }
+
+        public void setRequestExist() {
+            isRequestExist = false;
+        }
+
+        public void setIncomeExist() {
+            isIncomeExist = false;
+        }
+
+        public Event generateIncome(double time) {
+            double delta = 50.0;
+            return new ProductIncome(time + random.nextInt((int)delta * 100) / 100.0,
+                    possibleProducts.get(productRandom.nextInt(possibleProducts.size())),
+                    random.nextInt(10) + 1
+            );
+        }
+
+        private Event generateRequest(double time) {
+            double delta = 50.0;
+            Section section = storage.getRandomSectionWithProduct();
+            if (section != null) {
+                return new ProductRequest(
+                        time + random.nextInt((int) delta * 100) / 100.0,
+                        section.getProduct(),
+                        random.nextInt(section.getAmount()) + 1
+                );
+            } else {
+                return null;
+            }
+        }
+
+        private void generateOutProductEvents(double time) {
+            if (!stopGenerating) {
+                if (!isIncomeExist) {
+                    Event event = generateIncome(time);
+                    queue.add(event);
+                    output.debugPrintln("DEBUG: generate INCOME. DATE: " + event.getDate());
+                    isIncomeExist = true;
+                }
+                if (!isRequestExist) {
+                    Event request = generateRequest(time);
+                    if (request != null) {
+                        queue.add(request);
+                        output.debugPrintln("DEBUG: generate REQUEST. DATE: " + request.getDate());
+                        isRequestExist = true;
+                    }
                 }
             }
         }

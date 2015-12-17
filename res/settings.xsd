@@ -3,8 +3,6 @@
   <xsd:element name="settings">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="deadline" type="xsd:double"/>
-        <xsd:element name="stopGenerating" type="xsd:double"/>
         <xsd:element name="storageFilename" type="xsd:string"/>
         <xsd:element name="productsFilename" type="xsd:string"/>
         <xsd:element name="outputFile" type="xsd:string"/>

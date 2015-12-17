@@ -1,5 +1,6 @@
 package main;
 
+import resource.XMLModelSettingsParser;
 import resource.XMLProductsParser;
 import resource.XMLSettingsParser;
 import resource.XMLStorageParser;
@@ -17,8 +18,10 @@ public class Main {
         out = System.out;
         XMLSettingsParser settingsParser = new XMLSettingsParser("Settings.xml");
         Settings settings = new Settings(settingsParser);
-        XMLStorageParser parser = new XMLStorageParser(settings.getStorageFilename());
+        XMLModelSettingsParser modelParser = new XMLModelSettingsParser(settings.getModelSettingsFilename());
+        XMLStorageParser storageParser = new XMLStorageParser(settings.getStorageFilename());
         XMLProductsParser productsParser = new XMLProductsParser(settings.getProductsFilename());
-        new Model(parser, productsParser, settings).run();
+        new Model(storageParser, productsParser, modelParser, settings)
+                .run();
     }
 }

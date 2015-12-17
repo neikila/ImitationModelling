@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="storage.xsl"?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="model.xsd">
+  <deadline>150.0</deadline>
+  <stopGenerating>100.0</stopGenerating>
+  <events>
+    <RequestIncome>
+      <delta>50</delta>
+      <amount>10</amount>
+    </RequestIncome>
+    <RequestRequest>
+      <delta>50</delta>
+      <amount>10</amount>
+    </RequestRequest>
+  </events>
+</model>
