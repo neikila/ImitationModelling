@@ -1,6 +1,7 @@
 package main;
 
 import resource.XMLProductsParser;
+import resource.XMLSettingsParser;
 import resource.XMLStorageParser;
 
 import java.io.PrintStream;
@@ -13,8 +14,10 @@ public class Main {
 
     public static void main(String[] args)  throws Exception {
         out = System.out;
-        XMLStorageParser parser = new XMLStorageParser("Storage.xml");
-        XMLProductsParser productsParser = new XMLProductsParser("PossibleProducts.xml");
+        XMLSettingsParser settingsParser = new XMLSettingsParser("Settings.xml");
+        Settings settings = new Settings(settingsParser);
+        XMLStorageParser parser = new XMLStorageParser(settings.getStorageFilename());
+        XMLProductsParser productsParser = new XMLProductsParser(settings.getProductsFilename());
         new storageModel.Model(parser, productsParser).run();
     }
 }

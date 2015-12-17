@@ -85,20 +85,17 @@ public class XMLParser {
     }
 
     protected boolean getBoolean(Element node, String targetNodeName) {
-        node.normalize();
         NodeList list = node.getElementsByTagName(targetNodeName);
-        return Boolean.parseBoolean(list.item(0).getNodeValue());
+        return Boolean.parseBoolean(list.item(0).getTextContent());
     }
 
     protected String getString(Element element, String targetNodeName) {
-        element.normalize();
         NodeList list = element.getElementsByTagName(targetNodeName);
-        return list.item(0).getNodeValue();
+        return list.item(0).getTextContent();
     }
 
     protected double getDouble(Element element, String targetNodeName) {
-        element.normalize();
         NodeList list = element.getElementsByTagName(targetNodeName);
-        return Double.parseDouble(list.item(0).getNodeValue());
+        return Double.parseDouble(list.item(0).getTextContent());
     }
 }
