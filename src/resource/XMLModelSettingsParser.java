@@ -31,7 +31,7 @@ public class XMLModelSettingsParser extends XMLParser {
         return getDouble(root, STOP_GENERATING);
     }
 
-    public Element getEvent(String eventName) {
+    private Element getEvent(String eventName) {
         NodeList list = root.getElementsByTagName(EVENTS);
         return  (Element)((Element)list.item(0)).getElementsByTagName(eventName).item(0);
     }

@@ -21,7 +21,7 @@ public class Settings {
         String outputFile = parser.getOutputFile();
         modelSettingsFilename = parser.getModelSettingsFilename();
         output = new Output(outputFile,toConsole);
-        output.setDebugOn(isDebug);
+        output.setDebug(isDebug);
         statisticOutputFilename = parser.getStatisticFilename();
     }
 

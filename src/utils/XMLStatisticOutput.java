@@ -31,10 +31,10 @@ public class XMLStatisticOutput {
     private Analyzer analyzer;
     private Document document;
 
-    public XMLStatisticOutput(String filename, Analyzer analyzer) {
+    public XMLStatisticOutput(String filename, Analyzer analyzer, String outputDir) {
         this.filename = filename;
         this.analyzer = analyzer;
-        outputDir = "out";
+        this.outputDir = outputDir;
     }
 
     public void print() {

@@ -13,7 +13,8 @@ import java.util.List;
  */
 public class XMLProductsParser extends XMLParser {
 
-    public static final String PRODUCT = "product";
+    public static final String PRODUCT_NAME = "productName";
+    public static final String WEIGHT_OF_SINGLE_PRODUCT = "weightOfSingleProduct";
 
     public XMLProductsParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
         super(fileName);
@@ -25,10 +26,10 @@ public class XMLProductsParser extends XMLParser {
 
     private Product getProduct(Element node) {
         String productName = node.
-                getElementsByTagName("productName").
+                getElementsByTagName(PRODUCT_NAME).
                 item(0).
                 getTextContent();
-        double weight = Double.parseDouble(node.getElementsByTagName("weightOfSingleProduct").item(0).getTextContent());
+        double weight = Double.parseDouble(node.getElementsByTagName(WEIGHT_OF_SINGLE_PRODUCT).item(0).getTextContent());
         return new Product(productName, weight);
     }
 }

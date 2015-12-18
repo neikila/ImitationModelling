@@ -41,7 +41,7 @@ public class Output {
         this(null, toConsole);
     }
 
-    public void setDebugOn(boolean isDebug) {
+    public void setDebug(boolean isDebug) {
         this.isDebug = isDebug;
     }
 
