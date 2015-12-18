@@ -49,13 +49,13 @@ public class Worker {
         position = point;
     }
 
-    public Event nextState() {
+    public Event nextState(double time) {
         double delay = 0;
         switch (state) {
             case Free:
                 state = State.GetToLoad;
                 delay = storage.getTimeDelay(position, task.from);
-                return new PointAchieved(Model.time + delay, task.from, this);
+                return new PointAchieved(time + delay, task.from, this);
             case GetToLoad:
                 state = State.Loading;
                 position = task.from;
@@ -63,14 +63,14 @@ public class Worker {
                 if (task.sectionFrom != null) {
                     delay += task.sectionFrom.getLevel() * 4;
                 }
-                return new ProductLoaded(Model.time + delay, this);
+                return new ProductLoaded(time + delay, this);
             case Loading:
                 state = State.GetToRelease;
                 if (task.sectionFrom != null) {
                     task.sectionFrom.getProduct(task.amount);
                 }
                 delay += storage.getTimeDelay(position, task.to);
-                return new PointAchieved(Model.time + delay, task.to, this);
+                return new PointAchieved(time + delay, task.to, this);
             case GetToRelease:
                 state = State.Releasing;
                 position = task.to;
@@ -78,7 +78,7 @@ public class Worker {
                 if (task.sectionTo != null) {
                     delay += task.sectionTo.getLevel() * 4;
                 }
-                return new ProductReleased(Model.time + delay, this);
+                return new ProductReleased(time + delay, this);
             case Releasing:
                 state = State.Free;
                 if (task.sectionTo != null) {
