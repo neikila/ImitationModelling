@@ -21,10 +21,15 @@ import java.io.File;
 public class XMLStatisticOutput {
     public static final String ROOT = "root";
     public static final String AVERAGE_QUEUE_SIZE = "averageQueueSize";
+    public static final String AVERAGE_TIME_SPENT_ON_MOVE = "averageTimeSpentOnMove";
+    public static final String AVERAGE_TIME_WAITING = "averageTimeWaiting";
+    public static final String AMOUNT_REJECTED = "amountRejected";
+    public static final String TOTAL_TIME_SPENT_ON_MOVE= "totalTimeSpentOnMove";
 
     private String outputDir;
     private String filename;
     private Analyzer analyzer;
+    private Document document;
 
     public XMLStatisticOutput(String filename, Analyzer analyzer) {
         this.filename = filename;
@@ -36,18 +41,18 @@ public class XMLStatisticOutput {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.newDocument();
+            document = builder.newDocument();
 
             Element root = document.createElement(ROOT);
 //            root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 //            root.setAttribute("xsi:noNamespaceSchemaLocation", "model.xsd");
             document.appendChild(root);
 
-            Element averageQueueSize = document.createElement(AVERAGE_QUEUE_SIZE);
-            averageQueueSize.appendChild(
-                    document.createTextNode(String.valueOf(analyzer.getAverageQueueSize()))
-            );
-            root.appendChild(averageQueueSize);
+            addProperty(root, AVERAGE_QUEUE_SIZE, analyzer.getAverageQueueSize());
+            addProperty(root, AVERAGE_TIME_SPENT_ON_MOVE, analyzer.getAverageTimeSpentOnMove());
+            addProperty(root, AVERAGE_TIME_WAITING, analyzer.getAverageTimeWaiting());
+            addProperty(root, TOTAL_TIME_SPENT_ON_MOVE, analyzer.getTotalTimeSpentOnMove());
+            addProperty(root, AMOUNT_REJECTED, analyzer.getCounterRejected());
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -64,5 +69,13 @@ public class XMLStatisticOutput {
             e.printStackTrace();
             System.err.println(e);
         }
+    }
+
+    private void addProperty(Element element, String name, Object value) {
+        Element averageQueueSize = document.createElement(name);
+        averageQueueSize.appendChild(
+                document.createTextNode(String.valueOf(value))
+        );
+        element.appendChild(averageQueueSize);
     }
 }

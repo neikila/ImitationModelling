@@ -80,6 +80,7 @@ public class Model implements Runnable {
                     break;
                 case ProductLoaded:
                     Event event = ((ProductLoaded) currentEvent).getWorker().nextState(time);
+                    analyzer.saveTime(event.getDate() - time);
                     queue.add(event);
                     break;
                 case ProductReleased:
@@ -88,8 +89,7 @@ public class Model implements Runnable {
                         out.println("From queue Out In");
                         Event eventTemp = queueOfInOut.poll();
                         analyzer.pollEventFromQueue(eventTemp, time);
-                        worker.handleProductEvent(eventTemp);
-                        queue.add(worker.nextState(time));
+                        handleProductEvent(eventTemp);
                     }
                     break;
             }

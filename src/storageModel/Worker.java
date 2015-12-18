@@ -55,6 +55,7 @@ public class Worker {
             case Free:
                 state = State.GetToLoad;
                 delay = storage.getTimeDelay(position, task.from);
+                out.println("Time in the way: " + delay);
                 return new PointAchieved(time + delay, task.from, this);
             case GetToLoad:
                 state = State.Loading;
@@ -70,6 +71,7 @@ public class Worker {
                     task.sectionFrom.getProduct(task.amount);
                 }
                 delay += storage.getTimeDelay(position, task.to);
+                out.println("Time in the way: " + delay);
                 return new PointAchieved(time + delay, task.to, this);
             case GetToRelease:
                 state = State.Releasing;
@@ -156,8 +158,6 @@ public class Worker {
         }
         Point from = section.getPointAccess();
         out.printPoint("Section", section.getIndex());
-        double timeDelay = storage.getTimeDelay(from, to);
-        out.println("Time delay = " + timeDelay);
 
         task = new Task(from, to, section, null, request.getProduct(), request.getAmount());
         return true;
