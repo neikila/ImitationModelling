@@ -28,8 +28,7 @@ public class Launcher {
         Model model = new Model(storageParser, productsParser, modelParser, settings);
         model.run();
         Analyzer analyzer = model.getAnalyzer();
-        XMLStatisticOutput output = new XMLStatisticOutput("statistic.xml", analyzer);
+        XMLStatisticOutput output = new XMLStatisticOutput(settings.getStatisticOutput(), analyzer);
         output.print();
-
     }
 }

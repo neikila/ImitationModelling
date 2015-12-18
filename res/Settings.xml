@@ -3,6 +3,7 @@
   <storageFilename>Storage.xml</storageFilename>
   <productsFilename>PossibleProducts.xml</productsFilename>
   <outputFile>output.log</outputFile>
+  <statisticFilename>statistic.xml</statisticFilename>
   <modelSettings>Model.xml</modelSettings>
   <toConsole>false</toConsole>
   <isDebug>true</isDebug>

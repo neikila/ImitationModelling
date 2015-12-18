@@ -15,6 +15,7 @@ public class XMLSettingsParser extends XMLParser {
     public static final String MODEL_SETTINGS = "modelSettings";
     public static final String TO_CONSOLE = "toConsole";
     public static final String IS_DEBUG = "isDebug";
+    public static final String STATISTIC_FILENAME = "statisticFilename";
 
     public XMLSettingsParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
         super(fileName);
@@ -30,6 +31,10 @@ public class XMLSettingsParser extends XMLParser {
 
     public String getOutputFile() {
         return getString(root, OUTPUT_FILE);
+    }
+
+    public String getStatisticFilename() {
+        return getString(root, STATISTIC_FILENAME);
     }
 
     public String getModelSettingsFilename() {

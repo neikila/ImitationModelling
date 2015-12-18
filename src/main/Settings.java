@@ -9,21 +9,20 @@ import utils.Output;
 public class Settings {
     private final String storageFilename;
     private final String productsFilename;
-    private final String outputFile;
     private final String modelSettingsFilename;
-    private final boolean toConsole;
-    private final boolean isDebug;
+    private final String statisticOutput;
     private final Output output;
 
     public Settings(XMLSettingsParser parser) {
-        isDebug = parser.getIsDebug();
-        toConsole = parser.getToConsole();
+        boolean isDebug = parser.getIsDebug();
+        boolean toConsole = parser.getToConsole();
         storageFilename = parser.getStorageFilename();
         productsFilename = parser.getProductsFilename();
-        outputFile = parser.getOutputFile();
+        String outputFile = parser.getOutputFile();
         modelSettingsFilename = parser.getModelSettingsFilename();
         output = new Output(outputFile,toConsole);
         output.setDebugOn(isDebug);
+        statisticOutput = parser.getStatisticFilename();
     }
 
     public Output getOutput() {
@@ -38,19 +37,11 @@ public class Settings {
         return productsFilename;
     }
 
-    public String getOutputFile() {
-        return outputFile;
-    }
-
     public String getModelSettingsFilename() {
         return modelSettingsFilename;
     }
 
-    public boolean isToConsole() {
-        return toConsole;
-    }
-
-    public boolean isDebug() {
-        return isDebug;
+    public String getStatisticOutput() {
+        return statisticOutput;
     }
 }
