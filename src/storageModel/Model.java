@@ -29,19 +29,18 @@ public class Model implements Runnable {
     final private Output out;
     final private Analyzer analyzer;
 
-    public Model(XMLStorageParser parser, XMLProductsParser productsParser, XMLModelSettingsParser modelSettings, Settings settings) {
+    public Model(Settings settings) {
         out = settings.getOutput();
         analyzer = new Analyzer();
 
-        Storage storage = new Storage(parser, out);
+        Storage storage = new Storage(settings);
         queue = new PriorityQueue<>(new Event.EventComparator());
         queueOfInOut = new PriorityQueue<>(new Event.EventComparator());
         worker = new Worker(new Point(0, 0), storage, out);
-        List<Product> possibleProducts = productsParser.getProducts();
-        generator = new EventGenerator(out, storage, queue, modelSettings, possibleProducts);
+        generator = new EventGenerator(storage, queue, settings);
 
         time = 0.0;
-        deadline = modelSettings.getDeadline();
+        deadline = settings.getModelSettings().getDeadline();
 
         ProductIncome event = (ProductIncome) generator.generateIncome(time);
         queue.add(event);

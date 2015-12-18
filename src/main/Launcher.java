@@ -14,18 +14,13 @@ public class Launcher {
     public static final String DEFAULT_SETTING_LOCATION = "Settings.xml";
 
     public static void main(String[] args)  throws Exception {
-        XMLSettingsParser settingsParser;
         String settingsXML = DEFAULT_SETTING_LOCATION;
         if (args.length == 1) {
             settingsXML = args[0];
         }
         System.out.println("Settings are read from " + settingsXML);
-        settingsParser = new XMLSettingsParser(settingsXML);
-        Settings settings = new Settings(settingsParser);
-        XMLModelSettingsParser modelParser = new XMLModelSettingsParser(settings.getModelSettingsFilename());
-        XMLStorageParser storageParser = new XMLStorageParser(settings.getStorageFilename());
-        XMLProductsParser productsParser = new XMLProductsParser(settings.getProductsFilename());
-        Model model = new Model(storageParser, productsParser, modelParser, settings);
+        Settings settings = new Settings(settingsXML);
+        Model model = new Model(settings);
         model.run();
         Analyzer analyzer = model.getAnalyzer();
         XMLStatisticOutput output = new XMLStatisticOutput(settings.getStatisticOutputFilename(), analyzer, "out");

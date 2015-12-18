@@ -16,7 +16,7 @@ public class XMLProductsParser extends XMLParser {
     public static final String PRODUCT_NAME = "productName";
     public static final String WEIGHT_OF_SINGLE_PRODUCT = "weightOfSingleProduct";
 
-    public XMLProductsParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
+    public XMLProductsParser(String fileName) {
         super(fileName);
     }
 

@@ -17,7 +17,7 @@ public class XMLSettingsParser extends XMLParser {
     public static final String IS_DEBUG = "isDebug";
     public static final String STATISTIC_FILENAME = "statisticFilename";
 
-    public XMLSettingsParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
+    public XMLSettingsParser(String fileName) {
         super(fileName);
     }
 

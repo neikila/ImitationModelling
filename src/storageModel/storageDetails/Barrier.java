@@ -15,10 +15,6 @@ public class Barrier {
         }
     }
 
-    public Barrier(Polygon polygon) {
-        this.polygon = polygon;
-    }
-
     public Polygon getPolygon() {
         return polygon;
     }

@@ -147,14 +147,9 @@ public class Section {
         return "id: " + getId() + "; index[" + getIndex().x + ";" + getIndex().y + ']';
     }
 
-    /**
-     * Created by neikila on 19.11.15.
-     */
-    public static enum Direction {
-        Vertical,
+    public enum Direction {
         Up,
         Down,
-        Horizontal,
         Left,
         Right
     }

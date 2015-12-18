@@ -1,5 +1,6 @@
 package storageModel.events;
 
+import main.Settings;
 import resource.XMLModelSettingsParser;
 import storageModel.Product;
 import storageModel.Storage;
@@ -33,20 +34,22 @@ public class EventGenerator {
     private int deltaRequest;
     private int amountIncome;
 
-    public EventGenerator(Output output, Storage storage, Queue<Event> queue, XMLModelSettingsParser parser, List<Product> possibleProducts) {
-        this.output = output;
-        this.possibleProducts = possibleProducts;
+    public EventGenerator(Storage storage, Queue<Event> queue, Settings settings) {
+        this.output = settings.getOutput();
+        this.possibleProducts = settings.getProductsSettings().getProducts();
+        XMLModelSettingsParser modelSettings = settings.getModelSettings();
+
         random = new Random();
         productRandom = new Random();
         stopGenerating = false;
         isIncomeExist = false;
         isRequestExist = false;
-        this.stopTime = parser.getStopGenerating();
+        this.stopTime = modelSettings.getStopGenerating();
         this.storage = storage;
         this.queue = queue;
-        deltaIncome = parser.getIncomeDelta();
-        deltaRequest = parser.getRequestDelta();
-        amountIncome = parser.getIncomeAmount();
+        deltaIncome = modelSettings.getIncomeDelta();
+        deltaRequest = modelSettings.getRequestDelta();
+        amountIncome = modelSettings.getIncomeAmount();
     }
 
     public void check(double time) {

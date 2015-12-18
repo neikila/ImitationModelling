@@ -1,5 +1,6 @@
 package storageModel;
 
+import main.Settings;
 import resource.XMLStorageParser;
 import storageModel.storageDetails.*;
 import utils.Output;
@@ -21,20 +22,18 @@ public class Storage {
     private GraphOfWays graph;
     private Gates entrance;
     private Gates exit;
-    private Output out;
 
-    public Storage(XMLStorageParser parser, Output out) {
-        this.out = out;
-
+    public Storage(Settings settings) {
+        XMLStorageParser storageSettings = settings.getStorageSettings();
         box = new Point(2000, 2000);
-        this.boundPoints = parser.getWallPoints();
-        this.barriers = parser.getBarriers();
-        this.racks = parser.getRacks();
+        this.boundPoints = storageSettings.getWallPoints();
+        this.barriers = storageSettings.getBarriers();
+        this.racks = storageSettings.getRacks();
         this.sections = new ArrayList<>();
         setSections();
 
-        graph = new GraphOfWays(this, out);
-        List<Point> points = parser.getEntranceBounds();
+        graph = new GraphOfWays(this, settings.getOutput());
+        List<Point> points = storageSettings.getEntranceBounds();
         List<Point> entrancePoints = new ArrayList<>();
         // TODO захардкожено располоение горизонтальное
         for (int x = points.get(0).x; x < points.get(1).x; x += box.x) {
@@ -42,7 +41,7 @@ public class Storage {
         }
         entrance = new Gates(entrancePoints);
 
-        points = parser.getExitBounds();
+        points = storageSettings.getExitBounds();
         List<Point> exitPoints = new ArrayList<>();
         for (int x = points.get(0).x; x < points.get(1).x; x += box.x) {
             exitPoints.add(new Point(x / box.x, 0));
@@ -93,12 +92,7 @@ public class Storage {
         return graph.getTimeBetween(from, to);
     }
 
-    public void putProduct(Section section, Product product, int amount) {
-        section.setAmount(amount);
-        section.setProduct(product);
-    }
-
-    public void setSections() {
+    private void setSections() {
         for (Rack rack: racks) {
             Point coord = rack.getCoordinate();
             Point sectionSize = rack.getSectionSize();

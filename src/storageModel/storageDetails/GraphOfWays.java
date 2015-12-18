@@ -14,18 +14,17 @@ public class GraphOfWays {
     public final double DELAY_AT_THE_CORNER = 3.0;
     public final double DELAY_PER_METER = 1.0;
     private Map<Point, Node> nodes;
-    private Point offset;
     private Point step;
-    private Point size;
     private List<Way> ways;
     private Output out;
 
     public GraphOfWays(Storage storage, Output out) {
+
         this.out = out;
 
         nodes = new HashMap<>();
         step = storage.getBox();
-        offset = new Point(step.x / 2, step.y / 2);
+        Point offset = new Point(step.x / 2, step.y / 2);
         int left;
         int right;
         int top;
@@ -47,7 +46,7 @@ public class GraphOfWays {
                 top = temp.y;
         }
 
-        size = new Point((top - bottom) / step.y, (right - left) / step.y);
+        Point size = new Point((top - bottom) / step.y, (right - left) / step.y);
 
         for (int y = 0; y < size.y; ++y) {
             for (int x = 0; x < size.x; ++x) {
@@ -253,8 +252,8 @@ public class GraphOfWays {
     }
 
     protected class Way{
-        protected Node one;
-        protected Node two;
+        private Node one;
+        private Node two;
 
         public Way(Node one, Node two) {
             this.one = one;
@@ -277,131 +276,6 @@ public class GraphOfWays {
                 return one == way.one && two == way.two || one == way.two && two == way.one;
             } else
                 return false;
-        }
-    }
-
-    private class Tests {
-        public void testNodesAmount(int test2, int test3, int test4) {
-            int s2 = 0;
-            int s3 = 0;
-            int s4 = 0;
-            for (Node el: nodes.values()) {
-                if (el.getNeighbors().size() == 2)
-                    ++s2;
-                if (el.getNeighbors().size() == 3)
-                    ++s3;
-                if (el.getNeighbors().size() == 4)
-                    ++s4;
-            }
-            if (!(s2 == test2 && s3 == test3 && s4 == test4)) {
-                out.println("Error nodes amount");
-            } else {
-                out.println("OK");
-            }
-        }
-
-        public void testWaysAmount(int amount) {
-            if (ways.size() != amount)
-                out.println("Error amount");
-            else {
-                out.println("OK");
-            }
-        }
-    }
-
-    /**
-     * Created by neikila on 19.11.15.
-     */
-    public static class Node {
-        private List<Node> neighbors;
-        private Point index;
-        private double time;
-        private Node previous;
-
-        public Node(Point index) {
-            previous = null;
-            time = -1.0;
-            neighbors = new ArrayList<>();
-            this.index = index;
-        }
-
-        public Node(Point index, double time) {
-            this(index);
-            this.time = time;
-        }
-
-        public boolean isMoreThan(double time) {
-            return this.time < 0 || this.time > time;
-        }
-
-        public double getTime() {
-            return time;
-        }
-
-        public Node getPrevious() {
-            return previous;
-        }
-
-        public void setToDefault() {
-            time = -1.0;
-            previous = null;
-        }
-
-        public Point getIndex() {
-            return index;
-        }
-
-        public List<Node> getNeighbors() {
-            return neighbors;
-        }
-
-        public boolean addNeighbor(Node node) {
-            boolean toAdd = !neighbors.contains(node);
-            if (toAdd) {
-                neighbors.add(node);
-            }
-            return toAdd;
-        }
-
-        public void replaceNeighbor(Node toDelete, Node toAdd) {
-            neighbors.remove(toDelete);
-            neighbors.add(toAdd);
-        }
-
-        public boolean isNeighborTo(Node node) {
-            return neighbors.contains(node);
-        }
-
-        @Override
-        public String toString() {
-            return "Node: [" + index.x + ';' + index.y + "] Neighbors: " + neighbors.size();
-        }
-
-        public void setTime(double time) {
-            this.time = time;
-        }
-
-        public void setPrevious(Node previous) {
-            this.previous = previous;
-        }
-
-        public static class NodeComparator implements Comparator<Node> {
-            @Override
-            public int compare(Node o1, Node o2) {
-                if (o1.time > o2.time)
-                    return 1;
-                if (o1.time < o2.time)
-                    return -1;
-                return 0;
-            }
-        }
-
-        public void removeNeighbor(Node node) {
-            neighbors.remove(node);
-        }
-
-        public double distance(Node node) {
-            return index.distance(node.index);
         }
     }
 }

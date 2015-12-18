@@ -23,13 +23,18 @@ import java.util.function.Function;
 public class XMLParser {
     protected Element root;
 
-    public XMLParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
+    public XMLParser(String fileName) {
         File fXmlFile = new File("res", fileName);
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(fXmlFile);
-        root = doc.getDocumentElement();
-        root.normalize();
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+            root = doc.getDocumentElement();
+            root.normalize();
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            System.err.println("Error in reading configuration from " + fXmlFile.getPath());
+            System.exit(-1);
+        }
     }
 
     protected <T> List<T> getArrayOfSomethingFromElement (Element node, String tag, Function<Element, T> getter) {

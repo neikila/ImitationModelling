@@ -19,7 +19,7 @@ public class XMLModelSettingsParser extends XMLParser {
     public static final String AMOUNT = "amount";
     public static final String DELTA = "delta";
 
-    public XMLModelSettingsParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
+    public XMLModelSettingsParser(String fileName) {
         super(fileName);
     }
 

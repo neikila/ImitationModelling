@@ -129,7 +129,7 @@ public class Worker {
         }
     }
 
-    public void handleProductIncome(ProductIncome income) {
+    private void handleProductIncome(ProductIncome income) {
         Point from = storage.getEntrancePoint();
         out.printPoint("From   ", from);
         double totalWeight = income.getAmount() * income.getProduct().getWeightOfUnit();
@@ -146,7 +146,7 @@ public class Worker {
         task = new Task(from, to, null, section, income.getProduct(), income.getAmount());
     }
 
-    public boolean handleProductRequest(ProductRequest request) {
+    private boolean handleProductRequest(ProductRequest request) {
         Point to = storage.getExitPoint();
         out.printPoint("To     ", to);
         Section section = storage.findSectionWithProduct(request.getProduct(), request.getAmount());

@@ -23,7 +23,7 @@ public class XMLStorageParser extends XMLParser {
     public static final String ENTRANCE = "entrance";
     public static final String EXIT = "exit";
 
-    public XMLStorageParser(String fileName) throws ParserConfigurationException, IOException, SAXException {
+    public XMLStorageParser(String fileName) {
         super(fileName);
     }
 
