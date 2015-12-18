@@ -55,11 +55,11 @@ public class EventGenerator {
         }
     }
 
-    public void setRequestExist() {
+    public void unsetRequestExist() {
         isRequestExist = false;
     }
 
-    public void setIncomeExist() {
+    public void unsetIncomeExist() {
         isIncomeExist = false;
     }
 

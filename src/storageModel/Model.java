@@ -58,13 +58,13 @@ public class Model implements Runnable {
             out.println(currentEvent);
             switch (currentEvent.getEventType()) {
                 case ProductIncome:
-                    generator.setIncomeExist();
+                    generator.unsetIncomeExist();
                     generator.generateOutProductEvents(time);
                     out.printProductEvent(currentEvent);
                     handleProductEvent(currentEvent);
                     break;
                 case ProductRequest:
-                    generator.setRequestExist();
+                    generator.unsetRequestExist();
                     generator.generateOutProductEvents(time);
                     out.printProductEvent(currentEvent);
                     handleProductEvent(currentEvent);
