@@ -17,7 +17,6 @@ public class Storage {
     private List<Point> boundPoints;
     private List<Barrier> barriers;
     private List<Section> sections;
-    private List<Rack> racks;
     private Point box;
     private GraphOfWays graph;
     private Gates entrance;
@@ -28,9 +27,8 @@ public class Storage {
         box = new Point(2000, 2000);
         this.boundPoints = storageSettings.getWallPoints();
         this.barriers = storageSettings.getBarriers();
-        this.racks = storageSettings.getRacks();
         this.sections = new ArrayList<>();
-        setSections();
+        setSections(storageSettings.getRacks());
 
         graph = new GraphOfWays(this, settings.getOutput());
         List<Point> points = storageSettings.getEntranceBounds();
@@ -92,7 +90,7 @@ public class Storage {
         return graph.getTimeBetween(from, to);
     }
 
-    private void setSections() {
+    private void setSections(List<Rack> racks) {
         for (Rack rack: racks) {
             Point coord = rack.getCoordinate();
             Point sectionSize = rack.getSectionSize();
@@ -183,10 +181,6 @@ public class Storage {
 
     public List<Section> getSections() {
         return sections;
-    }
-
-    public List<Rack> getRacks() {
-        return racks;
     }
 
     public Point getBox() {

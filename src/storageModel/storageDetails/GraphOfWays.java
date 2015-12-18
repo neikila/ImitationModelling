@@ -69,7 +69,8 @@ public class GraphOfWays {
         if (from.getPrevious() != null && !isOnTheLine(from.getPrevious(), from, to)) {
             result += DELAY_AT_THE_CORNER;
         }
-        result += from.distance(to) * step.x / 1000.0 * DELAY_PER_METER;
+        final int MM_IN_M = 1000;
+        result += from.distance(to) * step.x / MM_IN_M * DELAY_PER_METER;
         return result;
     }
 
@@ -181,14 +182,14 @@ public class GraphOfWays {
             nodes.remove(node.getIndex());
         } else {
             out.println("Critical error searching the way");
-            System.exit(-1);
+            System.exit(-2);
         }
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        nodes.values().forEach((Node el) -> stringBuilder.append(el).append('\n'));
+        nodes.values().forEach(el -> stringBuilder.append(el).append('\n'));
         return stringBuilder.toString();
     }
 
@@ -225,18 +226,16 @@ public class GraphOfWays {
 
     private void minimise() {
         List<Node> listValues = new ArrayList<>(nodes.values());
-        for (Node node : listValues) {
-            if (node.getNeighbors().size() == 2) {
-                List<Node> list = node.getNeighbors();
-                Node left = list.get(0);
-                Node right = list.get(1);
-                if (isOnTheLine(left, node, right)) {
-                    left.replaceNeighbor(node, right);
-                    right.replaceNeighbor(node, left);
-                    nodes.remove(node.getIndex());
-                }
+        listValues.stream().filter(node -> node.getNeighbors().size() == 2).forEach(node -> {
+            List<Node> list = node.getNeighbors();
+            Node left = list.get(0);
+            Node right = list.get(1);
+            if (isOnTheLine(left, node, right)) {
+                left.replaceNeighbor(node, right);
+                right.replaceNeighbor(node, left);
+                nodes.remove(node.getIndex());
             }
-        }
+        });
     }
 
     private boolean isOnTheLine(Point one, Point two, Point three) {
