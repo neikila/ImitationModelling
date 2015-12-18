@@ -8,7 +8,7 @@ import java.awt.*;
  * Created by neikila on 19.11.15.
  */
 public class Section {
-    static int lastId = 0;
+    private static int lastId = 0;
     private Point index;
     private Point size;
     private int level;
@@ -34,10 +34,6 @@ public class Section {
 
     public Section(Point index, Point size, int level, Direction direction, Polygon polygon, double maxWeightOfSection) {
         this(index, size, level, direction, lastId++, polygon, maxWeightOfSection);
-    }
-
-    public Section(Point index, Point size, int level, Polygon polygon, double maxWeightOfSection) {
-        this(index, size, level, null, polygon, maxWeightOfSection);
     }
 
     public Point getCenter() {
@@ -126,14 +122,6 @@ public class Section {
                 break;
         }
         return from;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     public void addProduct(Product product, int amount) {
