@@ -5,6 +5,7 @@ import resource.XMLProductsParser;
 import resource.XMLSettingsParser;
 import resource.XMLStorageParser;
 import storageModel.Model;
+import utils.XMLStatisticOutput;
 
 import java.io.PrintStream;
 
@@ -24,5 +25,8 @@ public class Main {
         Model model = new Model(storageParser, productsParser, modelParser, settings);
         model.run();
         Analyzer analyzer = model.getAnalyzer();
+        XMLStatisticOutput output = new XMLStatisticOutput("statistic.xml", analyzer);
+        output.print();
+
     }
 }
