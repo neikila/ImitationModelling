@@ -10,7 +10,7 @@ public class Settings {
     private final String storageFilename;
     private final String productsFilename;
     private final String modelSettingsFilename;
-    private final String statisticOutput;
+    private final String statisticOutputFilename;
     private final Output output;
 
     public Settings(XMLSettingsParser parser) {
@@ -22,7 +22,7 @@ public class Settings {
         modelSettingsFilename = parser.getModelSettingsFilename();
         output = new Output(outputFile,toConsole);
         output.setDebugOn(isDebug);
-        statisticOutput = parser.getStatisticFilename();
+        statisticOutputFilename = parser.getStatisticFilename();
     }
 
     public Output getOutput() {
@@ -41,7 +41,7 @@ public class Settings {
         return modelSettingsFilename;
     }
 
-    public String getStatisticOutput() {
-        return statisticOutput;
+    public String getStatisticOutputFilename() {
+        return statisticOutputFilename;
     }
 }
