@@ -15,10 +15,6 @@ public class Product {
         this.weightOfUnit = weightOfUnit;
     }
 
-    public Product(String name) {
-        this(name, 0);
-    }
-
     public int getId() {
         return id;
     }
