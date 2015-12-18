@@ -1,5 +1,6 @@
 package storageModel;
 
+import main.Analyzer;
 import main.Settings;
 import resource.XMLModelSettingsParser;
 import resource.XMLProductsParser;
@@ -18,22 +19,24 @@ import java.util.Random;
  */
 public class Model implements Runnable {
     private PriorityQueue <Event> queue;
-    private Worker worker;
     private PriorityQueue <Event> queueOfInOut;
+    final private EventGenerator generator;
     private double deadline;
-    public double time;
+    private double time;
+
+    private Worker worker;
 
     final private Output out;
-
-    final private EventGenerator generator;
+    final private Analyzer analyzer;
 
     public Model(XMLStorageParser parser, XMLProductsParser productsParser, XMLModelSettingsParser modelSettings, Settings settings) {
         out = settings.getOutput();
+        analyzer = new Analyzer();
 
         Storage storage = new Storage(parser, out);
         queue = new PriorityQueue<>(new Event.EventComparator());
         queueOfInOut = new PriorityQueue<>(new Event.EventComparator());
-        worker = new Worker(new Point(0,0), storage, out);
+        worker = new Worker(new Point(0, 0), storage, out);
         List<Product> possibleProducts = productsParser.getProducts();
         generator = new EventGenerator(out, storage, queue, modelSettings, possibleProducts);
 
@@ -53,6 +56,7 @@ public class Model implements Runnable {
     public void run() {
         while (!queue.isEmpty() && time < deadline) {
             generator.check(time);
+            analyzer.addToIntegralSumOfInputOutput(time, queueOfInOut);
             Event currentEvent = queue.poll();
             time = currentEvent.getDate();
             out.println(currentEvent);
@@ -82,21 +86,33 @@ public class Model implements Runnable {
                     ((ProductReleased) currentEvent).getWorker().nextState(time);
                     if (queueOfInOut.size() > 0) {
                         out.println("From queue Out In");
-                        worker.handleProductEvent(queueOfInOut.poll());
+                        Event eventTemp = queueOfInOut.poll();
+                        analyzer.pollEventFromQueue(eventTemp, time);
+                        worker.handleProductEvent(eventTemp);
                         queue.add(worker.nextState(time));
                     }
                     break;
             }
         }
+        analyzer.stopTimer(time);
     }
 
     private void handleProductEvent(Event currentEvent) {
         if (worker.isFree()) {
-            if (worker.handleProductEvent(currentEvent))
-                queue.add(worker.nextState(time));
+            if (worker.handleProductEvent(currentEvent)) {
+                Event temp = worker.nextState(time);
+                analyzer.saveTime(temp.getDate() - time);
+                queue.add(temp);
+            } else {
+                analyzer.incrementRejected();
+            }
         } else {
             out.println("To queue");
             queueOfInOut.add(currentEvent);
         }
+    }
+
+    public Analyzer getAnalyzer() {
+        return analyzer;
     }
 }

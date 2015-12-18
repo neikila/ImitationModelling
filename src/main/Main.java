@@ -21,7 +21,8 @@ public class Main {
         XMLModelSettingsParser modelParser = new XMLModelSettingsParser(settings.getModelSettingsFilename());
         XMLStorageParser storageParser = new XMLStorageParser(settings.getStorageFilename());
         XMLProductsParser productsParser = new XMLProductsParser(settings.getProductsFilename());
-        new Model(storageParser, productsParser, modelParser, settings)
-                .run();
+        Model model = new Model(storageParser, productsParser, modelParser, settings);
+        model.run();
+        Analyzer analyzer = model.getAnalyzer();
     }
 }
