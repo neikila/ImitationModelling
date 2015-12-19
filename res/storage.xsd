@@ -66,7 +66,6 @@
         <xsd:element name="size" type="point"/>
         <xsd:element name="levels" type="xsd:integer"/>
         <xsd:element name="maxWeightPerSection" type="xsd:double"/>
-        <xsd:element name="sectionSize" type="point"/>
         <xsd:element name="direction" minOccurs="0">
           <xsd:simpleType>
             <xsd:restriction>
@@ -74,8 +73,6 @@
               <xsd:enumeration value="Down"/>
               <xsd:enumeration value="Right"/>
               <xsd:enumeration value="Left"/>
-              <xsd:enumeration value="Vertical"/>
-              <xsd:enumeration value="Horizontal"/>
             </xsd:restriction>
           </xsd:simpleType>
         </xsd:element>
@@ -85,7 +82,7 @@
 
   <xsd:complexType name="gate">
     <xsd:sequence>
-      <xsd:element name="point" minOccurs="2" maxOccurs="unbounded" type="point"/>
+      <xsd:element name="point" minOccurs="2" maxOccurs="2" type="point"/>
     </xsd:sequence>
   </xsd:complexType>
 </xsd:schema>

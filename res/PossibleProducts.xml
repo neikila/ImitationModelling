@@ -2,12 +2,10 @@
 <possibleProducts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="possibleProducts.xsd">
   <product>
     <productName>stackOfWood</productName>
-    <productId>1</productId>
     <weightOfSingleProduct>1</weightOfSingleProduct>
   </product>
   <product>
     <productName>metal</productName>
-    <productId>2</productId>
     <weightOfSingleProduct>1</weightOfSingleProduct>
   </product>
   <product>

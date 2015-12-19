@@ -120,8 +120,7 @@ public class Worker {
     public boolean handleProductEvent(Event event) {
         switch(event.getEventType()) {
             case ProductIncome:
-                handleProductIncome((ProductIncome) event);
-                return true;
+                return handleProductIncome((ProductIncome) event);
             case ProductRequest:
                 return handleProductRequest((ProductRequest) event);
             default:
@@ -129,7 +128,7 @@ public class Worker {
         }
     }
 
-    private void handleProductIncome(ProductIncome income) {
+    private boolean handleProductIncome(ProductIncome income) {
         Point from = storage.getEntrancePoint();
         out.printPoint("From   ", from);
         double totalWeight = income.getAmount() * income.getProduct().getWeightOfUnit();
@@ -138,12 +137,13 @@ public class Worker {
             out.println("No place for product.\n" +
                     income.getProduct() + "\n" +
                     "Amount " + income.getAmount());
-            return;
+            return false;
         } else {
             out.printPoint("Section", section.getIndex());
         }
         Point to = section.getPointAccess();
         task = new Task(from, to, null, section, income.getProduct(), income.getAmount());
+        return true;
     }
 
     private boolean handleProductRequest(ProductRequest request) {

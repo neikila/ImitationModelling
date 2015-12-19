@@ -79,7 +79,8 @@ public class XMLStorageParser extends XMLParser {
         Point size = getPoint((Element)el.getElementsByTagName("size").item(0));
         int levels = Integer.parseInt(el.getElementsByTagName("levels").item(0).getTextContent());
         double maxWeightPerSection = Double.parseDouble(el.getElementsByTagName("maxWeightPerSection").item(0).getTextContent());
-        Point sectionSize = getPoint((Element)el.getElementsByTagName("sectionSize").item(0));
+//        Point sectionSize = getPoint((Element)el.getElementsByTagName("sectionSize").item(0));
+        Point sectionSize = new Point(2000, 2000);
         NodeList direction = el.getElementsByTagName("direction");
         Section.Direction possibleDirection = null;
         if (direction.getLength() > 0) {

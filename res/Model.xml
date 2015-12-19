@@ -9,7 +9,6 @@
     </productIncome>
     <productRequest>
       <delta>50</delta>
-      <amount>10</amount>
     </productRequest>
   </events>
 </model>

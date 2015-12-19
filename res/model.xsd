@@ -10,8 +10,21 @@
         <xsd:element name="events">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="productIncome" type="productEvent"/>
-              <xsd:element name="productRequest" type="productEvent"/>
+              <xsd:element name="productIncome">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="delta" type="positiveDouble"/>
+                    <xsd:element name="amount" type="positiveDouble"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="productRequest">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="delta" type="positiveDouble"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
@@ -19,13 +32,6 @@
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
-
-  <xsd:complexType name="productEvent">
-    <xsd:sequence>
-      <xsd:element name="delta" type="positiveDouble"/>
-      <xsd:element name="amount" type="positiveDouble"/>
-    </xsd:sequence>
-  </xsd:complexType>
 
   <xsd:simpleType name="positiveDouble">
     <xsd:restriction base="xsd:double">
