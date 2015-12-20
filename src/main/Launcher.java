@@ -18,8 +18,8 @@ public class Launcher {
         if (args.length == 1) {
             settingsXML = args[0];
         }
-        System.out.println("Settings are read from " + settingsXML);
         Settings settings = new Settings(settingsXML);
+        System.out.println("Settings was read from " + settingsXML);
         Model model = new Model(settings);
         model.run();
         Analyzer analyzer = model.getAnalyzer();

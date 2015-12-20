@@ -136,7 +136,6 @@ public class Worker {
 
     private boolean handleProductIncome(ProductIncome income) {
         Point from = storage.getEntrancePoint();
-        out.printPoint("From   ", from);
         double totalWeight = income.getAmount() * income.getProduct().getWeightOfUnit();
         Section section = storage.findSectionForProduct(income.getProduct(), totalWeight);
         if (section == null) {
@@ -145,6 +144,7 @@ public class Worker {
                     "Amount " + income.getAmount());
             return false;
         } else {
+            out.printPoint("From   ", from);
             out.printPoint("Section", section.getIndex());
         }
         Point to = section.getPointAccess();
@@ -154,7 +154,6 @@ public class Worker {
 
     private boolean handleProductRequest(ProductRequest request) {
         Point to = storage.getExitPoint();
-        out.printPoint("To     ", to);
         Section section = storage.findSectionWithProduct(request.getProduct(), request.getAmount());
         if (section == null) {
             out.println("No such product.\n" +
@@ -164,7 +163,7 @@ public class Worker {
         }
         Point from = section.getPointAccess();
         out.printPoint("Section", section.getIndex());
-
+        out.printPoint("To     ", to);
         task = new Task(from, to, section, null, request.getProduct(), request.getAmount());
         return true;
     }
