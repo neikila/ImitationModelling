@@ -44,10 +44,6 @@ public class XMLModelSettingsParser extends XMLParser {
         return Integer.parseInt(getEvent(PRODUCT_INCOME).getElementsByTagName(DELTA).item(0).getTextContent());
     }
 
-    public int getRequestAmount() {
-        return Integer.parseInt(getEvent(PRODUCT_REQUEST).getElementsByTagName(AMOUNT).item(0).getTextContent());
-    }
-
     public int getRequestDelta() {
         return Integer.parseInt(getEvent(PRODUCT_REQUEST).getElementsByTagName(DELTA).item(0).getTextContent());
     }

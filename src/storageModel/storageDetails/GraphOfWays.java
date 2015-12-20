@@ -58,7 +58,7 @@ public class GraphOfWays {
             }
         }
 
-        updateNeighbors();
+        nodes.values().forEach(this::setNeighbor);
         minimise();
         ways = new ArrayList<>();
         updateWays();
@@ -204,10 +204,6 @@ public class GraphOfWays {
                 }
             }
         }
-    }
-
-    private void updateNeighbors() {
-        nodes.values().forEach(this::setNeighbor);
     }
 
     private void setNeighbor(Node el) {

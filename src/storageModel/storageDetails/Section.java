@@ -101,8 +101,11 @@ public class Section {
     }
 
     public boolean isAcceptable(Product product, double weight) {
-        return ((this.product == null || this.product.getId() == product.getId()) &&
-                (maxWeightOfSection - product.getWeightOfUnit() * amount) > weight);
+        if (this.product == null )
+            return maxWeightOfSection > weight;
+        else
+            return (this.product.getId() == product.getId()) &&
+                (maxWeightOfSection - product.getWeightOfUnit() * amount) > weight;
     }
 
     public Point getPointAccess() {
