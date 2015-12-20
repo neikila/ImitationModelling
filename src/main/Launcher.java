@@ -25,5 +25,6 @@ public class Launcher {
         Analyzer analyzer = model.getAnalyzer();
         XMLStatisticOutput output = new XMLStatisticOutput(settings.getStatisticOutputFilename(), analyzer, "out");
         output.print();
+        settings.getOutput().close();
     }
 }

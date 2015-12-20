@@ -86,4 +86,8 @@ public class Output {
             println(str);
         }
     }
+
+    public void close() {
+        out.close();
+    }
 }
