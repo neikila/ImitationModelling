@@ -54,7 +54,7 @@ public class Output {
             println("{'Product': '" + ((ProductIncome) event).getProduct().getName() +
                     "', 'amount': " + ((ProductIncome) event).getAmount() + '}');
         }
-        if (event.getEventType().equals(Event.EventType.ProductReleased)) {
+        if (event.getEventType().equals(Event.EventType.ProductRequest)) {
             println("{'Product': '" + ((ProductRequest) event).getProduct().getName() +
                     "', 'amount': " + ((ProductRequest) event).getAmount() + '}');
         }
